@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-键盘控制div左右移动</title>
+    <script src="js/perfectMove.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+    div {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        position: absolute;
+    }
+</style>
+<script>
+    document.onkeydown = function(e) {
+        var e = e || event;
+        var aDiv = document.getElementsByTagName('div');
+        //按鼠标左键向左走，按右键向右走
+        if (e.keyCode == 37) {
+            aDiv[0].style.left = aDiv[0].offsetLeft - 10 + 'px';
+        } else if (e.keyCode == 39) {
+            aDiv[0].style.left = aDiv[0].offsetLeft + 10 + 'px';
+        }
+
+    }
+</script>
+<body>
+<div></div>
+</body>
+</html>

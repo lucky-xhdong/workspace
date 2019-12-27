@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/element-ui.css">
+    <title>表格</title>
+</head>
+<style>
+    .checkbox-wrapper label {
+        margin: 0 10px;
+    }
+    .el-table tr th.show,
+    .el-table tr td.show  {
+        display: table-cell;
+    }
+    .el-table tr th.hide,
+    .el-table tr td.hide {
+        display: none;
+    }
+</style>
+<body>
+<div id="app">
+    <el-button size="mini" type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
+
+    <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="handleClose">
+        <div class="checkbox-wrapper">
+            <el-checkbox v-for="(item, index) in configItemsAll"
+                         :key="index"
+                         @change="checkItem($event, item)"
+                         :checked="item.className=='show'">{{item.label}}</el-checkbox>
+        </div>
+        <span slot="footer" class="dialog-footer">
+    <el-button size="mini" @click="dialogVisible = false">取 消</el-button>
+    <el-button size="mini" type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
+    <div class="table" ref="table">
+        <el-table
+                :data="tableData">
+            <el-table-column
+                    v-for="(item, index) in configItemsAll"
+                    :key="index"
+                    :prop=item.prop
+                    :label=item.label
+                    :class-name=item.className
+                    :width=item.width>
+            </el-table-column>
+        </el-table>
+    </div>
+</div>
+<script src="js/vue.js" type="text/javascript" ></script>
+<script src="js/element-ui.js"></script>
+<script type="text/javascript">
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            tableData: [
+                {
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1517 弄'
+            }],
+            dialogVisible: false,
+            configItemsAll: [
+                {id:0, label: '编号0', prop: 'A1', className:'hide', width: 100},
+                {id:1, label: '日期1', prop: '2016-05-04', className:'show', width: 100},
+                {id:2, label: '姓名2', prop: '王小虎', className:'show', width: 100},
+                {id:3, label: '性别3', prop: '女', className:'hide', width: 100},
+                {id:4, label: '职业4', prop: '工程师', className:'show', width: 100},
+                {id:5, label: '地址5', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                {id:6, label: '地址6', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                {id:7, label: '地址7', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                {id:8, label: '地址8', prop: '上海市普陀区金沙江路', className:'hide', width: 200},
+                {id:9, label: '地址9', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                {id:10, label: '地址10', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                {id:11, label: '地址11', prop: '上海市普陀区金沙江路', className:'hide', width: 200},
+                {id:12, label: '地址12', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                // {id:13, label: '地址13', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                // {id:14, label: '地址14', prop: '上海市普陀区金沙江路', className:'hide', width: 200},
+                // {id:15, label: '地址15', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                // {id:16, label: '地址16', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                // {id:17, label: '地址17', prop: '上海市普陀区金沙江路', className:'hide', width: 200},
+                // {id:18, label: '地址18', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                // {id:19, label: '地址19', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                // {id:20, label: '地址20', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+                // {id:21, label: '地址21', prop: '上海市普陀区金沙江路', className:'show', width: 200},
+            ],
+        },
+        created() {
+            this.setDefaultWidth();
+        },
+        watch: {
+        },
+        methods: {
+            setDefaultWidth() {
+                this.$nextTick(() => {
+                    let tempArr = [], tempWidth = 0;
+                    for (let i = 0, len = this.configItemsAll.length; i < len; i++) {
+                        if(this.configItemsAll[i].className == 'show') {
+                            tempArr.push(this.configItemsAll[i]);
+                        }
+                    }
+
+                    for (let j = 0, len = tempArr.length; j < len; j++) {
+                        tempWidth += tempArr[j].width;
+                    }
+                    this.$refs.table.style.width += tempWidth + 'px';
+                    this.$refs.table.style.height = 100 + 'px';
+                })
+            },
+            checkItem (e, item) {
+                if (e == true) {
+                    item.className = 'show';
+                } else {
+                    item.className = 'hide';
+                }
+                this.setDefaultWidth();
+            },
+            handleClose () {
+                this.dialogVisible = false;
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-多物体运动之offsetWidth的bug处理</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    div {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        float: left;
+        border: 1px solid;/*添加1px边框，在js中控制宽度没有递减反而递增是为什么？*/
+        background-color: green;
+        opacity: .3;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    }
+</style>
+<script>
+    //处理兼容性问题
+    function getStyle(obj, name) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[name];
+        } else {
+            return getComputedStyle(obj, false)[name]
+        }
+    }
+    setInterval(function () {
+        var oDiv = document.getElementById('div1');
+        // 添加1px边框，在js中控制宽度没有递减反而递增是为什么？
+        // 因为offsetWidth获取的是盒模型样式，包含正常宽度，还有边框及padding值，要避免这个问题，可直接获取width而非offsetWidth，
+        // 但这样会存在兼容性问题，需要针对兼容性分别获取width属性
+        // 使用parseInt将宽度值转换成数字
+        oDiv.style.width = parseInt(getStyle(oDiv, 'width')) - 1 + 'px';
+    }, 30)
+</script>
+<body>
+<div id="div1"></div>
+</body>
+</html>

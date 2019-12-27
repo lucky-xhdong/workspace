@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>策略模式</title>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+<input type="text" id="input">
+<input type="button" id="btn" value="测试">
+<script>
+    window.onload = function () {
+        var $input = $("#input").val();
+        var val = {
+            isEmpty: function (argument) {
+                return false;
+            },
+            isTel: function () {
+                return true;
+            }
+        }
+        $("#btn").on('click', function () {
+            var ise = val.isEmpty($input);
+            var isTel = val.isTel($input);
+            if (!(ise && isTel)) {
+                console.log('通过审核！')
+            }
+        })
+    }
+</script>
+</body>
+</html>

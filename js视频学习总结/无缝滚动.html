@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>无缝滚动</title>
+</head>
+<style>
+    #div1 {
+        width: 400px;
+        height: 100px;
+        position: relative;
+        background-color: #00f;
+        overflow: hidden;
+    }
+    #div1 ul {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    #div1 li {
+        width: 100px;
+        height: 100px;
+        float: left;
+        list-style: none;
+    }
+    #div1 li:first-child,
+    #div1 li:first-child + li + li + li + li {
+        background-color: #f00;
+    }
+    #div1 li:first-child + li,
+    #div1 li:first-child + li + li + li + li  + li {
+        background-color: #ff0;
+    }
+    #div1 li:first-child + li + li,
+    #div1 li:first-child + li + li + li + li + li + li {
+        background-color: #f0f;
+    }
+    #div1 li:first-child + li + li + li,
+    #div1 li:first-child + li + li + li + li + li + li  + li {
+        background-color: #0ff;
+    }
+</style>
+<script>
+    window.onload = function () {
+        var oDiv = document.getElementById('div1');
+        var oUl = oDiv.getElementsByTagName('ul')[0];
+        var aLi = oUl.getElementsByTagName('li');
+        var timer = null;
+        var speed = 2;
+
+        //将ul的内容复制一份
+        oUl.innerHTML += oUl.innerHTML;
+        oUl.style.width = aLi.length * aLi[0].offsetWidth + 'px';
+        function move () {
+            //向左滚动
+            if (oUl.offsetLeft < -oUl.offsetWidth / 2) {
+                oUl.style.left = 0;
+            }
+
+            //向右滚动
+            if (oUl.offsetLeft > 0) {
+                oUl.style.left = -oUl.offsetWidth / 2 + 'px';
+            }
+            oUl.style.left = oUl.offsetLeft + speed + 'px';
+        }
+        timer = setInterval(move, 30);
+        //鼠标移入清除定时器 暂停滚动
+        oDiv.onmouseover = function () {
+            clearInterval(timer);
+        }
+        //鼠标移出，继续滚动
+        oDiv.onmouseout = function () {
+            timer = setInterval(move, 30);
+        }
+        //通过修改speed的值来控制是向左滚动还是向右滚动
+        document.getElementsByTagName('a')[0].onclick = function () {
+            speed = -2;
+        }
+        document.getElementsByTagName('a')[1].onclick = function () {
+            speed = 2;
+        }
+    }
+</script>
+<body>
+<a href="javascript:;">向左走</a>
+<a href="javascript:;">向右走</a>
+<div id="div1">
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+</body>
+</html>

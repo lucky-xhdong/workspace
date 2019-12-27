@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>适配器模式</title>
+</head>
+<body>
+<script>
+    //自己写的
+    // var aa = {
+    //     test: function () {
+    //         console.log('我是test')
+    //     },
+    //     go: function () {
+    //         console.log('我是go')
+    //     }
+    // };
+    // aa.test();
+    //被修改过之后的
+    // function aa() {
+    //     this.test = function () {
+    //         console.log('我是新的test')
+    //     }
+    // }
+    // aa.prototype.gogo = function (first_argument) {
+    //     console.log('我是新gogo');
+    // }
+
+    //如何维护之前的代码逻辑
+    function pp() {
+        this.test = function () {
+            console.log('我是新的test')
+        }
+    }
+    pp.prototype.gogo = function (first_argument) {
+        console.log('我是新gogo');
+    }
+
+    function shipeiqi() {
+        var $ = new pp();
+        var aa = {
+            test: function () {
+                $.test();
+            },
+            gogo: function () {
+                $.gogo()
+            }
+        }
+        return aa;
+    }
+    var aa = new shipeiqi();
+    aa.test();
+    aa.gogo();
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var popHeight = $(".popover-lists").height();
+            var winHeight = $(window).height();
+            if(popHeight > winHeight) {
+                $(".popover").css({
+                    height: (winHeight - 60) + 'px',
+                    marginTop: -parseInt((winHeight - 60) / 2) + 'px'
+                })
+                $(".popover-lists").css({
+                    height: (winHeight - 60) + 'px',
+                    overflowX: 'hidden',
+                    overflowY: 'auto'
+                });
+            }else {
+
+                $(".popover").css({
+                    height: popHeight + 'px',
+                    marginTop: -parseInt(popHeight / 2) + 'px'
+                })
+
+                $(".popover-lists").css({
+                    height: 'auto'
+                })
+            }
+        })
+    </script>
+</head>
+<body>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        margin: 0;
+    }
+    ul {
+        padding: 0;
+    }
+    li {
+        list-style: none;
+    }
+    .bg-popover {
+        background-color: #000;
+        opacity: .5;
+    }
+    .popover {
+        width: 420px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-left: -210px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+    .popover-lists ul {
+        font-size: 0;
+        margin: 0 25px;
+    }
+    .popover-lists li {
+        width: 150px;
+        height: 36px;
+        line-height: 36px;
+        background-color: #e5e5e5;
+        display: inline-block;
+        text-align: center;
+        padding: 5px;
+        margin: 10px 15px;
+    }
+    .popover-lists li a {
+        font: 16px "Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体";
+        color: #222;
+        text-decoration: none;
+    }
+</style>
+<div class="bg-popover">
+    <div class="popover">
+        <div class="popover-lists">
+            <ul>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+                <li><a href="javascript:;">列表一</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

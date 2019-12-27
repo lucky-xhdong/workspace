@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>js模拟QQ震动效果</title>
+    <script type="text/javascript" src="js/jquery.shake.js"></script>
+    <style>
+        * {
+            padding:0;
+            margin:0
+        }
+        body {
+            background:#000;
+        }
+        #d {
+            position:absolute;
+            right:10px;
+            bottom:10px;
+            display:block;
+        }
+        a, img {
+            border:none;
+        }
+    </style>
+</head>
+
+<body>
+<style>
+    body{ padding-top:100px;}
+    .baidu_ads{ width:960px; height:90px; position:fixed; left:50%; top:0; margin-left:-480px; overflow:hidden; z-index:9999; }
+    .sougou_ads{ width:728px; height:90px; position:fixed; left:50%; bottom:0; margin-left:-364px; overflow:hidden;z-index:9999;}
+</style>
+
+<i id="d">
+    <a target="_blank" href="javascript:;"><img src="images/image.jpg"></a>
+</i>
+<script type="text/javascript">
+    var ad=document.getElementById('d')
+    var LL=ad.offsetLeft
+    var TT=ad.offsetTop
+    window.onload=function(){
+        window.setInterval(function(){
+            new Shank(ad,20,60,10)
+        },2500)
+    }
+</script>
+
+
+</body></html>

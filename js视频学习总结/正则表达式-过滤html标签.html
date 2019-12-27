@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正则表达式-过滤html标签</title>
+</head>
+<body>
+<textarea name="" id="txt" cols="30" rows="10"></textarea>
+<input type="button" id="btn" value="过滤">
+<textarea name="" id="txt1" cols="30" rows="10"></textarea>
+<br>
+<input type="text" id="txtEmail">
+<input type="button" id="btnEmail" value="校验">
+<script>
+    window.onload = function () {
+        var oTxt1 = document.getElementById('txt');
+        var oTxt2 = document.getElementById('txt1');
+        var oBtn = document.getElementById('btn');
+        oBtn.onclick = function () {
+            //<.+> 表示以<开头，以>结尾，.表示任意字符，+表示任意个，.+表示任意个任意字符
+            //在<>中不能出现<>本身，所以不能直接用.号匹配
+            var reg = /<[^<>]+>/g;
+            oTxt2.value = oTxt1.value.replace(reg, '');
+        }
+
+
+        var oTxtEmail = document.getElementById('txtEmail');
+        var oBtnEmail = document.getElementById('btnEmail');
+        oBtnEmail.onclick = function () {
+            var reg = /^\w+@[a-z0-9]+\.[a-z]+$/i;
+            if (reg.test(oTxtEmail.value)) {
+                console.log('正确')
+            } else {
+                console.log('错误')
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

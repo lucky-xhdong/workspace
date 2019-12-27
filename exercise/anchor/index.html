@@ -1,0 +1,122 @@
+<style type="text/css">
+
+    /* Apply these styles only when #preview-pane has
+       been placed within the Jcrop widget */
+    .jcrop-holder #preview-pane,.jcrop-holder #preview-pane1{
+        display: block;
+        position: absolute;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+        -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+        box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+    }
+    .jcrop-holder #preview-pane {
+        bottom: -195px;;
+    }
+    /* The Javascript code will set the aspect ratio of the crop
+       area based on the size of the thumbnail preview,
+       specified here */
+    #preview-pane .preview-container {
+        width: 220px;
+        height: 160px;
+        overflow: hidden;
+    }
+    #preview-pane1{
+        bottom: -116px;
+        left:303px;
+    }
+    #preview-pane1 .preview-container {
+        width: 109px;
+        height:80px;
+        overflow: hidden;
+    }
+</style>
+
+<div class="course-title">
+    <h4>班级资料</h4>
+</div>
+<div class="module-style dt-font-left col-md-12 position-relative">
+    <div ng-show="preview_avatar">
+        <h4 class="">班级头像
+            <small class="position-right"><a ng-click="toggleavatar(false)">编辑</a></small>
+        </h4>
+        <img ng-src="{{groupItem.avatar}}">
+    </div>
+    <div class="form-show" ng-show="upload_avatar">
+        <h4>班级头像</h4>
+        <img ng-src="{{groupItem.avatar}}">
+        <div class="clear"></div>
+        <div>
+            <div class="form-control-wrapper fileinput btn bg-f29200">
+                <div class="btnUploadAvatar">
+                    <i class="fa fa-upload pull-left"></i>
+                    <!--<input type="button" class="bg-f29200 no-border empty" readonly="" value="上传图片">-->
+                    <!--<input type="file" multiple="" id="inputFile" ng-click="toggleupload_avatar(false)">-->
+                    <div class="button pull-left" ngf-select ng-model="files" ngf-accept="'image/*'">上传图片</div>
+                    <div class="button hideUploadAvatar disnone" ngf-select ngf-change="upload($files)">上传图片</div>
+                </div>
+            </div>
+            <input type="button" class="btn bg-eeeced btn-style" value="取消" ng-click="cancelavatar(true)">
+        </div>
+        <div class="clear-20"></div>
+                <span class="progress upload_avatar_progress">
+                    <div style="width:{{filep}}%" ng-bind="filep + '%'"></div>
+                </span>
+    </div>
+    <div class="clear-20"></div>
+    <div class="jcrop-upload-avatar" ng-show="crop_avatar">
+        <img ng-src="{{avatar_url}}" sb-load="onImgLoad($event)" id="target" alt="[Jcrop Example]" width="500px"/>
+        <div class="dataimg-wrap">
+            <h5>图片尺寸预览：</h5>
+            <div id="preview-pane">
+                <div class="preview-container">
+                    <img ng-src="{{avatar_url}}" class="jcrop-preview" alt="Preview" />
+                </div>
+            </div>
+            <div id="preview-pane1">
+                <div class="preview-container">
+                    <img ng-src="{{avatar_url}}" class="jcrop-preview" alt="Preview" />
+                </div>
+            </div>
+        </div>
+        <form ng-submit="cropAvatar($event)" name="signup_form" novalidate>
+            <input type="hidden" id="x"  name="x" ng-model="crop.x"/>
+            <input type="hidden" id="y"  name="y" ng-model="crop.y"/>
+            <input type="hidden" id="w"  name="w" ng-model="crop.w"/>
+            <input type="hidden" id="h"  name="h" ng-model="crop.h"/>
+            <input type="submit" class="btn bg-f29200 btn-style" value="确定">
+            <input type="button" class="btn bg-eeeced btn-style" value="取消" ng-click="toggleupload_avatar(true)">
+        </form>
+    </div>
+</div>
+<div class="clear-30"></div>
+<div class="module-style dt-font-left col-md-12 position-relative">
+    <div ng-show="group_avatar">
+        <h4 class="">班级简介
+            <small class="position-right"><a ng-click="togglegroup()">编辑</a></small>
+        </h4>
+        <img ng-src="{{course.avatar}}" >
+    </div>
+    <div class="form-show" ng-show="group_input">
+        <h4>班级简介</h4>
+        <form ng-submit="settingGroup($event)" name="activitys" novalidate>
+            <div class="form-control-wrapper">
+                <textarea class="form-control empty  course-introduce" ng-model="groupItem.body" name="body" placeholder="输入班级简介。。。。。"></textarea>
+                <div class="floating-label" ></div>
+                <span class="material-input"></span>
+            </div>
+            <input class="btn bg-f29200 btn-style" type="submit" ng-disabled=" !groupItem.body"  value="确定">
+            <input class="btn bg-eeeced btn-style" type="button" ng-click="togglegroup_content()" value="取消">
+        </form>
+    </div>
+</div>
+<div class="clear-30"></div>
+<div class="module-style dt-font-left col-md-12 overhidden position-relative">
+    <h4 class="pull-left">邀请码</h4>
+    <div class="invitecode pull-left">
+        <span class="pull-left"><i class="lock-icon"></i>{{groupItem.invitationCode}}</span>
+        <input type="button" value="换一换" class="change bg-f29200 pull-right">
+    </div>
+</div>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title>Title</title>
+</head>
+<style>
+    ul li {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 10px;
+    }
+    ul li a {
+        color: #666;
+    }
+    ul li.active a {
+        color: #f00;
+    }
+    table {
+        width: 500px;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+    table tr td {
+        text-align: center;
+        padding: 15px 5px;
+        border: 1px solid #eee;
+    }
+    table tr td .cell {
+        display: block;
+        color: #666;
+        text-decoration: none;
+    }
+    table tr td .cell.active {
+        background-color: #f00;
+    }
+    table tr td .cell:hover {
+        text-decoration: underline;
+    }
+    .btnBox .btn.isActive {
+        color: #f00;
+    }
+</style>
+<body>
+<div id="app">
+    <table>
+        <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
+            <td v-for="(column, columnIndex) in row.list" :key="columnIndex">
+                <a href="javascript:;" class="cell"
+                   v-if="userId === column.userId"
+                   :class="{active: selfChecked == columnIndex}"
+                   @click="select(rowIndex, columnIndex, row, column)">{{column.shiftName}}</a>
+                <a href="javascript:;" class="cell"
+                   v-else
+                   :class="{active: columnChecked == columnIndex && rowChecked == rowIndex}"
+                   @click="select(rowIndex, columnIndex, row, column)">{{column.shiftName}}</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    let flag = true
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            userId: 20,
+            selfChecked: -1,
+            rowChecked: -1,
+            columnChecked: -1,
+            tableData: [
+                {
+                    isChecked: -1,
+                    list: [
+                        {
+                            row: 0,
+                            column: 0,
+                            shiftName: '早1',
+                            userId: 20,
+                            status: 1,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 0,
+                            column: 1,
+                            shiftName: '早2',
+                            userId: 20,
+                            status: 1,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 0,
+                            column: 2,
+                            shiftName: '早3',
+                            userId: 20,
+                            status: 2,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 0,
+                            column: 3,
+                            shiftName: '早4',
+                            userId: 20,
+                            status: 2,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 0,
+                            column: 4,
+                            shiftName: '早5',
+                            userId: 20,
+                            status: 1,
+                            isChecked: -1,
+                            checked: false
+                        }
+                    ]
+                },
+                {
+                    isChecked: -1,
+                    list: [
+                        {
+                            row: 1,
+                            column: 0,
+                            shiftName: '晚1',
+                            userId: 21,
+                            status: 2,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 1,
+                            column: 1,
+                            shiftName: '晚2',
+                            userId: 21,
+                            status: 2,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 1,
+                            column: 2,
+                            shiftName: '晚3',
+                            userId: 21,
+                            status: 1,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 1,
+                            column: 3,
+                            shiftName: '晚4',
+                            userId: 21,
+                            status: 1,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 1,
+                            column: 4,
+                            shiftName: '晚5',
+                            userId: 21,
+                            status: 1,
+                            isChecked: -1,
+                            checked: false
+                        }
+                    ]
+                },
+                {
+                    isChecked: -1,
+                    list: [
+                        {
+                            row: 2,
+                            column: 0,
+                            shiftName: '夜1',
+                            userId: 22,
+                            status: 1,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 2,
+                            column: 1,
+                            shiftName: '夜2',
+                            userId: 22,
+                            status: 2,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 2,
+                            column: 3,
+                            shiftName: '夜3',
+                            userId: 22,
+                            status: 2,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 2,
+                            column: 4,
+                            shiftName: '夜4',
+                            userId: 22,
+                            status: 2,
+                            isChecked: -1,
+                            checked: false
+                        },
+                        {
+                            row: 2,
+                            column: 5,
+                            shiftName: '夜5',
+                            userId: 22,
+                            status: 1,
+                            isChecked: -1,
+                            checked: false
+                        }
+                    ]
+                }
+
+            ]
+        },
+        created() {
+        },
+        methods: {
+            select(rowIndex, columnIndex, row, column) {
+                if (this.userId === column.userId) {
+                    if (columnIndex === this.selfChecked) {
+                        this.selfChecked = -1
+                    } else {
+                        this.selfChecked = columnIndex
+                    }
+                } else {
+                    if (columnIndex === this.columnChecked && rowIndex === this.rowChecked) {
+                        this.columnChecked = -1
+                        this.rowChecked = -1
+                    } else {
+                        this.columnChecked = columnIndex
+                        this.rowChecked = rowIndex
+                    }
+                }
+            }
+        }
+    });
+</script>
+</html>

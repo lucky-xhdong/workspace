@@ -1,0 +1,96 @@
+.bigdata-wrapper {
+  .common-section {
+    &.first-section {
+      background: url("../assets/images/banner-bigdata.jpg") top center no-repeat;
+      .bigdata-container {
+        margin: 0 auto;
+        width: 1200px;
+      }
+    }
+    &.second-section {
+      .bigdata-container {
+        width: 1209px;
+        margin: 50px auto;
+      }
+    }
+    .bigdata-container {
+      .service-wrapper {
+        .corp-info {
+          color: #fff;
+          text-align: center;
+          padding-top: 180px;
+          padding-bottom: 160px;
+          width: 836px;
+          margin: 0 auto;
+          &:before {
+            content: attr(data-before);
+            display: block;
+            font-size: 32px;
+          }
+          .txt {
+            font-size: 16px;
+            color: #f6f6f6;
+            line-height: 32px;
+            display: block;
+          }
+        }
+      }
+      .bigdata-list-wrapper {
+        ul {
+          font-size: 0;
+          li {
+            display: inline-block;
+            vertical-align: middle;
+            width: 393px;
+            height: 288px;
+            margin: 20px 5px;
+            .img-wrapper {
+              height: 222px;
+              overflow: hidden;
+              .img {
+                max-width: 100%;
+                -webkit-transition: all .2s ease .2s;
+                -moz-transition: all .2s ease .2s;
+                -ms-transition: all .2s ease .2s;
+                -o-transition: all .2s ease .2s;
+                transition: all .2s ease .2s;
+              }
+              &:hover {
+                .img {
+                  -webkit-transform: scale(1.1);
+                  -moz-transform: scale(1.1);
+                  -ms-transform: scale(1.1);
+                  -o-transform: scale(1.1);
+                  transform: scale(1.1);
+                }
+              }
+            }
+            .txt-wrapper {
+              padding: 15px;
+              .txt-title, .txt-summary {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                display: block;
+                overflow: hidden;
+              }
+              .txt-title {
+                font-size: 18px;
+                color: #000;
+                margin-bottom: 5px;
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+              .txt-summary {
+                font-size: 14px;
+                color: #000;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1280px) {
+}

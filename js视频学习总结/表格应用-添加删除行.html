@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格应用-添加删除行</title>
+</head>
+<script>
+    window.onload = function () {
+        var oTab = document.getElementById('tab1');
+        var oBtn = document.getElementById('btn1');
+        var oName = document.getElementById('name');
+        var oAge = document.getElementById('age');
+        //将表格序号保存在变量中，如果当前id已使用过将不会再出现
+        var id = oTab.tBodies[0].rows.length+1;
+        oBtn.onclick = function () {
+            var oTr = document.createElement('tr');
+
+            var oTd = document.createElement('td');
+            oTd.innerHTML = id++;
+            oTr.appendChild(oTd);
+
+            var oTd = document.createElement('td');
+            oTd.innerHTML = oName.value;
+            oTr.appendChild(oTd);
+
+            var oTd = document.createElement('td');
+            oTd.innerHTML = oAge.value;
+            oTr.appendChild(oTd);
+
+            var oTd = document.createElement('td');
+            oTd.innerHTML = '<a href="javascript:;">删除</a>';
+            oTr.appendChild(oTd);
+
+            oTd.getElementsByTagName('a')[0].onclick = function() {
+                this.parentNode.parentNode.remove();
+            }
+            oTab.tBodies[0].appendChild(oTr);
+        }
+    }
+</script>
+<body>
+姓名：<input type="text" id="name">
+年龄：<input type="text" id="age">
+<input type="button" id="btn1" value="添加">
+<table border="1" id="tab1" width="500">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>张三</td>
+        <td>20</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>李四</td>
+        <td>20</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>王五</td>
+        <td>20</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-仿淘宝之幻灯片</title>
+    <script src="js/perfectMove.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+    body {
+        overflow: hidden;
+    }
+    .carousel-wrapper {
+        width: 323px;
+        height: 430px;
+        border: 1px solid #eee;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+    }
+    .carousel {
+        position: relative;
+    }
+    .carousel li {
+        font-size: 0;
+    }
+    .pages {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: -1px;
+        text-align: center;
+    }
+    .pages li {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .pages li a {
+        display: block;
+        width: 20px;
+        height: 20px;
+        color: #666;
+        font-size: 14px;
+        line-height: 20px;
+        text-decoration: none;
+        border: 1px solid #eee;
+    }
+    .pages li.active a {
+        border-color: #e3c0e1;
+    }
+</style>
+<script>
+    window.onload = function () {
+        var oDiv = document.getElementById('carousel-wrapper');
+        var aBtn = oDiv.getElementsByTagName('ol')[0].getElementsByTagName('li');
+        var oUl = oDiv.getElementsByTagName('ul')[0];
+        oUl.style.height = oUl.getElementsByTagName('li')[0].offsetHeight * oUl.getElementsByTagName('li').length + 'px';
+        var now = 0;
+        for (var i = 0; i < aBtn.length; i++) {
+            aBtn[i].index = i;
+            aBtn[i].onclick = function () {
+                now = this.index;
+                tab();
+            }
+        }
+        function tab() {
+            for (var i = 0; i < aBtn.length; i++) {
+                aBtn[i].className = '';
+            }
+            aBtn[now].className = 'active';
+            // oUl.style.top = -430 * this.index + 'px';
+            startMove(oUl, { top: -430 * now})
+        }
+        function next() {
+            now++;
+            if (now == aBtn.length) {
+                now = 0;
+            }
+            tab();
+        }
+        var timer = setInterval(next, 2000);
+        oDiv.onmouseover = function () {
+            clearInterval(timer);
+        }
+        oDiv.onmouseout = function () {
+            timer = setInterval(next, 2000);
+        }
+    }
+</script>
+<body>
+<div class="carousel-wrapper" id="carousel-wrapper">
+    <ul class="carousel">
+        <li><a href="javascript:;"><img src="images/1.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="images/2.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="images/3.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="images/4.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="images/5.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="images/6.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="images/7.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="images/8.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="images/9.jpg" alt=""></a></li>
+    </ul>
+    <ol class="pages">
+        <li class="active"><a href="javascript:;">1</a></li>
+        <li><a href="javascript:;">2</a></li>
+        <li><a href="javascript:;">3</a></li>
+        <li><a href="javascript:;">4</a></li>
+        <li><a href="javascript:;">5</a></li>
+        <li><a href="javascript:;">6</a></li>
+        <li><a href="javascript:;">7</a></li>
+        <li><a href="javascript:;">8</a></li>
+        <li><a href="javascript:;">9</a></li>
+    </ol>
+</div>
+</body>
+</html>

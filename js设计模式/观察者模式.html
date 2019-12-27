@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <title>观察者模式</title>
+</head>
+<body>
+<script>
+    //在匿名函数前添加~ + -等符号可以让函数自执行的速度更快，但各个浏览器会存在时间差异
+    ~(function f() {
+        var o = $({});//将object对象转换成jquery对象，用来绑定事件
+        $.jianting = function () {
+            o.on.apply(o, arguments);
+        }
+        $.fabu = function () {
+            o.trigger.apply(o, arguments);
+        }
+        $.qingchu = function () {
+            o.off.apply(o, arguments);
+        }
+    })();
+    // /test/ls是一个频道
+    $.jianting('/test/ls', function (e, a, b, c) {
+        console.log(a + '|| ' + b + '||' + c);
+    })
+    $.jianting('/test/ls', function (e, a, b, c) {
+        console.log('ok');
+    })
+    $.fabu('/test/ls', [1,2,3]);
+</script>
+</body>
+</html>

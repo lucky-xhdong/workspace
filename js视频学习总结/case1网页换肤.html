@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网页换肤</title>
+    <link rel="stylesheet" href="css/css1.css">
+</head>
+<body>
+<style>
+    .test {
+        width: 100px;
+        height: 100px;
+        background-color: #ffff00;
+        margin: 0 auto;
+    }
+</style>
+<div class="test">
+
+</div>
+<script>
+    function setText() {
+        var oTxt = document.getElementById('txt1');
+        oTxt.value = '111';
+    }
+</script>
+<input type="text" id="txt1">
+<input type="button" value="改文字" onclick="setText()">
+</body>
+</html>

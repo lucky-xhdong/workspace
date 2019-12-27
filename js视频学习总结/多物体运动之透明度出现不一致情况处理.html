@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-多物体运动之透明度出现不一致情况处理</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    div {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        float: left;
+        background-color: green;
+        opacity: .3;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    }
+</style>
+<script>
+    //分析
+    // 距离大，速度大
+    // 距离小，速度小
+    window.onload = function () {
+        var aDiv = document.getElementsByTagName('div');
+        for (var i = 0; i < aDiv.length; i++) {
+            //如果只有一个定时器来控制三个div同时运动，会出现卡顿的情况，该如何处理？
+            //利用对象可以添加自定义属性的特点，给每一个div添加一个自定义属性timer，方便div运动过程中控制暂停还是滚动
+            aDiv[i].timer = null;
+            aDiv[i].alpha = 30;
+            aDiv[i].onmouseover = function() {
+                startMove(this, 100)
+            }
+            aDiv[i].onmouseout = function() {
+                startMove(this, 30)
+            }
+        }
+    }
+    function startMove(obj, iTarget) {
+        //清除div的自定义timer属性
+        clearInterval(obj.timer);
+        //用div的自定义timer属性设置定时器，避免干扰卡顿的情况
+        obj.timer = setInterval(function () {
+            var speed = (iTarget - obj.alpha) / 2;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            if (obj.alpha == iTarget) {
+                clearInterval(obj.timer);
+            } else {
+                obj.alpha += speed;
+                obj.style.filter = 'alpha(opacity: '+obj.alpha+')';
+                obj.style.opacity = obj.alpha / 100;
+            }
+        }, 30)
+    }
+</script>
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+<div id="div4"></div>
+</body>
+</html>

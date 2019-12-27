@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-多物体运动之选项卡</title>
+    <script src="js/move.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        list-style: none;
+    }
+    .container {
+        width: 323px;
+        margin: 0 auto;
+        position: relative;
+    }
+    .container .carousel-list {
+        width: 323px;
+        height: 430px;
+
+    }
+    .container .carousel-list li {
+        width: 323px;
+        height: 430px;
+        position: absolute;
+    }
+    .container .carousel-list li:first-child {
+        z-index: 1;
+    }
+
+    .container .carousel-thumb-list {
+        overflow: hidden;
+        position: relative;
+        height: 60px;
+    }
+    .container .carousel-thumb-list ul {
+        overflow: hidden;
+        position: absolute;
+        height: 60px;
+        left: 0;
+        top: 0;
+    }
+    .container .carousel-thumb-list li {
+        width: 45px;
+        height: 60px;
+        float: left;
+        margin: 0 9px;
+        opacity: .3;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    }
+    .container .carousel-thumb-list li:first-child {
+        opacity: 1;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    }
+    .container .btn-group {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 160px;
+        z-index: 11;
+    }
+    .container .btn-group .btn {
+        font: 14px/100px 'Microsoft Yahei';
+        text-decoration: none;
+        color: #000;
+        width: 50px;
+        height: 100px;
+        text-align: center;
+        position: relative;
+        opacity: 0;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    }
+    .container .btn-group .btn:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        bottom: 0;
+        right: 0;
+        background-color: #000;
+        opacity: .2;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
+    }
+    .container .btn-group .btn.btn-prev {
+        float: left;
+    }
+    .container .btn-group .btn.btn-next {
+        float: right;
+    }
+</style>
+<script>
+    function getByClass(oParent, sClass) {
+        var aEle = oParent.getElementsByTagName('*');
+        var aResult = [];
+        for (var i = 0; i < aEle.length; i++) {
+            if (aEle[i].className == sClass) {
+                aResult.push(aEle[i]);
+            }
+        }
+        return aResult;
+    }
+    window.onload = function () {
+        var oDiv = document.getElementById('playImages');
+        var oBtnPrev = getByClass(oDiv, 'btn btn-prev')[0];
+        var oBtnNext = getByClass(oDiv, 'btn btn-next')[0];
+        var oDivBig = getByClass(oDiv, 'carousel-list')[0];
+        var aLiBig = oDivBig.getElementsByTagName('li');
+        var oDivSmall = getByClass(oDiv, 'carousel-thumb-list')[0];
+        var oUlSmall = oDivSmall.getElementsByTagName('ul')[0];
+        var aLiSmall = oDivSmall.getElementsByTagName('li');
+        var nowZindex = 2;//设置当前滚动元素的zIndex值，因为第一张已经设置为1，从第二张开始滚动，所以设置为2
+        var now = 0;//为上一张下一张准备，记录当前点击的是第几张图片
+        oUlSmall.style.width = aLiSmall.length * (aLiSmall[0].offsetWidth + 20) + 'px';
+
+        //左右按钮悬浮显示
+        oBtnPrev.onmouseover = oBtnNext.onmouseover = function () {
+            startMove(this, 'opacity' , 100);
+        };
+        oBtnPrev.onmouseout = oBtnNext.onmouseout = function () {
+            startMove(this, 'opacity' , 0);
+        };
+        function tab() {
+            aLiBig[now].style.zIndex = nowZindex++;
+
+            //因为nowZindex是从2开始计算，最后一张图的zindex为10，第一张没有设置zindex
+            //所以当nowZindex走到大图的总长度+2再回到第二张图时，清除所有元素的样式，重新开始设置zindex
+            // if (nowZindex == aLiBig.length + 2) {
+            //     for (var j = 0; j < aLiBig.length; j++) {
+            //         aLiBig[j].setAttribute('style', '');
+            //     }
+            //     nowZindex = 2;
+            // }
+
+            for (var j = 0; j < aLiSmall.length; j++) {
+                startMove(aLiSmall[j], 'opacity', 30);
+            }
+            startMove(aLiSmall[now], 'opacity', 100);
+            aLiBig[now].style.height = 0;
+            startMove(aLiBig[now], 'height', 430);
+            if (now == 0) {
+                startMove(oUlSmall,'left', 0);
+            } else if (now == aLiSmall.length - 1) {
+                startMove(oUlSmall,'left', -(now - 2) * aLiSmall[0].offsetWidth);
+            } else {
+                startMove(oUlSmall,'left', -(now - 1) * aLiSmall[0].offsetWidth);
+            }
+        }
+        //大图切换
+        for (var i = 0; i < aLiSmall.length; i++) {
+            aLiSmall[i].index = i;
+            aLiSmall[i].onclick = function () {
+                // debugger
+                if (this.index == now) return;
+                now = this.index;
+                tab();
+            }
+            aLiSmall[i].onmouseover = function () {
+                startMove(this, 'opacity', 100);
+            }
+            aLiSmall[i].onmouseout = function () {
+                if (this.index != now) {
+                    startMove(this, 'opacity', 30);
+                }
+            }
+        }
+        //左右按钮点击切换
+        oBtnPrev.onclick = function () {
+            now--;
+            if (now == -1) {
+                now = aLiSmall.length - 1;
+            }
+            tab();
+        };
+        oBtnNext.onclick = function () {
+            now++;
+            //如果当前显示的是最后一张图片，从第一张显示
+            if (now == aLiSmall.length) {
+                now = 0;
+            }
+            tab();
+        };
+        var timer = setInterval(oBtnNext.onclick, 2000);
+        oDiv.onmouseover = function () {
+            clearInterval(timer);
+        }
+        oDiv.onmouseout = function () {
+            timer = setInterval(oBtnNext.onclick, 2000);
+        }
+    }
+</script>
+<body>
+<div class="container" id="playImages">
+    <div class="btn-group">
+        <a href="javascript:;" class="btn btn-prev"> << </a>
+        <a href="javascript:;" class="btn btn-next"> >> </a>
+    </div>
+    <div class="carousel-list">
+        <ul>
+            <li><a href="javascript:;"><img src="images/1.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/2.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/3.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/4.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/5.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/6.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/7.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/8.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/9.jpg" alt=""></a></li>
+        </ul>
+    </div>
+    <div class="carousel-thumb-list" id="carousel-thumb-list">
+        <ul>
+            <li><a href="javascript:;"><img src="images/1_s.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/2_s.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/3_s.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/4_s.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/5_s.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/6_s.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/7_s.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/8_s.jpg" alt=""></a></li>
+            <li><a href="javascript:;"><img src="images/9_s.jpg" alt=""></a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

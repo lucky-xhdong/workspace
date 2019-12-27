@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作dom</title>
+</head>
+<body>
+<script>
+    window.onload = function () {
+        var oBtn = document.getElementById('btn1');
+        var oUl = document.getElementById('ul1');
+        oBtn.onclick = function () {
+            var oLi = document.createElement('li');
+            var aLi = document.getElementsByTagName('li');
+            //确保ul里有li元素才能插入，否则只能添加
+            if (aLi.length > 0) {
+                oUl.insertBefore(oLi, aLi[0]);
+            } else  {
+                oUl.appendChild(oLi);
+            }
+        }
+    }
+</script>
+<input type="button" value="创建" id="btn1">
+<ul id="ul1"></ul>
+</body>
+</html>

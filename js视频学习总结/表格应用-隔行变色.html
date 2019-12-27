@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格应用-隔行变色</title>
+</head>
+<script>
+    window.onload = function () {
+        var oTab = document.getElementById('tab1');
+        //为防止鼠标移入移出时影响隔行变色样式，将表格本身的背景色存储在变量中，鼠标移出时再还原回去
+        var oldColor = '';
+        for (var i = 0; i < oTab.tBodies[0].rows.length; i++) {
+            oTab.tBodies[0].rows[i].onmouseover = function () {
+                oldColor = this.style.background;
+                this.style.background = 'green';
+            }
+            oTab.tBodies[0].rows[i].onmouseout = function () {
+                this.style.background = oldColor;
+            }
+            if (i % 2 == 0) {
+                oTab.tBodies[0].rows[i].style.background = '#ccc';
+            } else  {
+                oTab.tBodies[0].rows[i].style.background = '';
+            }
+        }
+    }
+</script>
+<body>
+<table border="1" id="tab1" width="500">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>年龄</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>张三</td>
+        <td>20</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>李四</td>
+        <td>20</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>王五</td>
+        <td>20</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

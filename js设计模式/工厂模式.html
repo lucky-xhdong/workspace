@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工厂模式</title>
+</head>
+<body>
+<script>
+    //工厂应该有厂长，来决定运行到底哪条产品线
+    //消费者->子类
+    var gongchang = {};
+    gongchang.chanyifu = function () {
+        this.gongren = 50;
+        console.log('我们有'+this.gongren)
+    }
+    gongchang.chanxie = function () {
+        alert('产鞋子')
+    }
+    gongchang.yunshu = function () {
+        alert('运输')
+    }
+    gongchang.changzhang = function (para) {
+        return new gongchang[para]();
+    }
+    var me = gongchang.changzhang('chanyifu');
+    console.log(me.gongren);
+</script>
+</body>
+</html>

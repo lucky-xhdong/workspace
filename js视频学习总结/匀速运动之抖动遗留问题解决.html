@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-匀速运动之抖动遗留问题解决</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        position: absolute;
+        left: 600px;
+        top: 50px;
+        opacity: .3;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    }
+    #div2 {
+        width: 1px;
+        height: 300px;
+        position: absolute;
+        background-color: #000;
+        left: 100px;
+        top: 0;
+    }
+    #div3 {
+        width: 1px;
+        height: 300px;
+        position: absolute;
+        background-color: #000;
+        left: 300px;
+        top: 0;
+    }
+</style>
+<script>
+    //分析
+    // 距离大，速度大
+    // 距离小，速度小
+    window.onload = function () {
+        var oBtn1 = document.getElementById('btn1');
+        var oBtn2 = document.getElementById('btn2');
+        oBtn1.onclick = function () {
+            startMove(100);
+        }
+        oBtn2.onclick = function () {
+            startMove(300);
+        }
+    }
+    var timer = null;
+    function startMove(iTarget) {
+        var oDiv = document.getElementById('div1');
+        clearInterval(timer);
+        timer = setInterval(function () {
+            //设置一个变量用来保存速度，特意设置一个奇数让div滚动的距离无法准确到达目标值
+            var speed = 0;
+            if (oDiv.offsetLeft < iTarget) {
+                speed = 7;
+            } else {
+                speed = -7;
+            }
+            //通过绝对值来处理，如果目标值-当前div向左滚动的值<=7便清除定时器，并将div的left值直接设置成目标值，以便能准确到达目标位置
+            if (Math.abs(iTarget - oDiv.offsetLeft) <= 7) {
+                clearInterval(timer);
+                oDiv.style.left = iTarget + 'px';
+            } else {
+                oDiv.style.left = oDiv.offsetLeft + speed + 'px';
+                document.title = oDiv.offsetLeft + speed;
+            }
+        }, 30)
+    }
+</script>
+<body>
+<input type="button" value="到100" id="btn1">
+<input type="button" value="到300" id="btn2">
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+</body>
+</html>

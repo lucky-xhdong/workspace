@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单例模式</title>
+</head>
+<body>
+<script>
+    //1.两个独立的对象 一个xiaowang 一个xiaoli
+    //2.让xiaoli跟xiaowang通过门铃进行通信
+    //3.先看一下xiaowang家有没有门，如果有门直接通过门铃通讯didi,如果没有先建门
+    //4.两个单例之间互相通信
+
+    var xiaowang = (function () {
+        var xiaowangjia = function (message) {
+            this.menling = message;
+        };
+        var men;
+        var info = {
+            sendMessage: function (message) {
+                if (!men) {
+                    men = new xiaowangjia(message);
+                }
+                return men;
+            }
+        };
+        return info;
+    })();
+    var xiaoli = {
+        callXiaowang: function(msg) {
+            var _xw = xiaowang.sendMessage(msg);
+            alert(_xw.menling);
+        }
+    };
+    xiaoli.callXiaowang('didi')
+</script>
+</body>
+</html>

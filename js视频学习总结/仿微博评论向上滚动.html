@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-仿微博评论向上滚动</title>
+    <script src="js/perfectMove.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+    body {
+        overflow: hidden;
+    }
+    .val {
+        width: 400px;
+        height: 50px;
+        display: block;
+        margin: 0 auto;
+    }
+    #btn {
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        display: block;
+        margin: 10px auto;
+    }
+    .container {
+        width: 323px;
+        height: 430px;
+        border: 1px solid #eee;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+    }
+    .container {
+        position: relative;
+    }
+    .container li {
+        border-bottom: 1px dashed #999;
+        word-break: break-word;
+        word-wrap: break-word;
+        opacity: .5;
+        padding: 5px 10px;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+    }
+</style>
+<script>
+    window.onload = function () {
+        var oUl = document.getElementById('ul');
+        var oBtn = document.getElementById('btn');
+        var oTxt = document.getElementById('val');
+
+        oBtn.onclick = function () {
+            var oLi = document.createElement('li');
+            oLi.innerHTML = oTxt.value;
+            oTxt.value = '';
+            if (oUl.children.length > 0) {
+                oUl.insertBefore(oLi, oUl.children[0]);
+            } else {
+                oUl.appendChild(oLi);
+            }
+            var iHeight = oLi.offsetHeight;
+            oLi.style.height = 0;
+            startMove(oLi, {height: iHeight}, function () {
+                startMove(oLi, {opacity: 100})
+            } )
+        }
+    }
+</script>
+<body>
+<textarea class="val" name="" cols="30" rows="10" id="val"></textarea>
+<input type="button" value="发布" id="btn">
+<div class="container">
+    <ul id="ul">
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>js运动-仿微博评论向上滚动</title>
+    <script src="./js运动-仿微博评论向上滚动_files/perfectMove.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+    body {
+        overflow: hidden;
+    }
+    .carousel-wrapper {
+        width: 323px;
+        height: 430px;
+        border: 1px solid #eee;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+    }
+    .carousel {
+        position: relative;
+    }
+    .carousel li {
+        font-size: 0;
+    }
+</style>
+    <script>
+    window.onload = function () {
+        var oDiv = document.getElementById('carousel-wrapper');
+        var aBtn = oDiv.getElementsByTagName('ol')[0].getElementsByTagName('li');
+        var oUl = oDiv.getElementsByTagName('ul')[0];
+
+    }
+</script>
+</head>
+
+
+<body>
+<textarea name="" id="" cols="30" rows="10"></textarea>
+<div class="carousel-wrapper" id="carousel-wrapper">
+    <ul class="carousel">
+    </ul>
+</div>
+
+</body></html>

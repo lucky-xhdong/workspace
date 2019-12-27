@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+
+</head>
+<body>
+<input type="text" id="name">
+<button type="button" id="setName">设置</button>
+<input type="text" id="txt">
+<button type="button" id="btn">发送</button>
+<div id="container"></div>
+<script>
+    var ws = null;
+    let btn = document.getElementById('btn');
+    let btnSet = document.getElementById('setName');
+    let txt = document.getElementById('txt');
+    let txtName = document.getElementById('name');
+    let con = document.getElementById('container');
+    btnSet.onclick = function () {
+        let name = txtName.value;
+        if (name === '') {
+            return console.log('名字为空')
+        }
+        ws = new WebSocket('ws://localhost:8000');//创建websocket连接，，服务端的IP+端口号
+        // 连接建立时会调用onopen事件
+        // 在连接创建时给btn按钮绑定点击事件，用来将输入的信息推送给服务端
+        ws.onopen = function () {
+            ws.send(JSON.stringify({
+                name: name,
+                type: 'setName'
+            }))
+        }
+        btn.onclick = function () {
+            let msg = txt.value;
+            ws.send(JSON.stringify({
+                text: msg,
+                type: 'chat'
+            }))
+        }
+        // 服务端给客户端推送消息：onmessage处理接收服务端推送过来的消息
+        ws.onmessage = function (e) {
+            con.appendChild(createChatPanel(JSON.parse(e.data)));
+        }
+        this.setAttribute('disabled', true)
+    }
+    function createChatPanel(data) {
+        var name = data.name;
+        var text = data.text;
+        var div = document.createElement('div');
+        var span1 = document.createElement('span');
+        var span2 = document.createElement('span');
+        span1.innerHTML = name + '' + (new Date()).toString()
+        span2.innerHTML = text
+        div.appendChild(span1);
+        div.appendChild(span2);
+        return div
+    }
+
+</script>
+</body>
+</html>

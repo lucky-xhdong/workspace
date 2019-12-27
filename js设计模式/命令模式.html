@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>命令模式</title>
+</head>
+<body>
+<script>
+    //首先有一个连
+    //这个连里有炮兵、步兵和连长
+    var lian = {};
+    lian.paobing = function (pao_num) {
+        console.log(pao_num + '炮开始战斗');
+    }
+    lian.bubing = function (bubing_num) {
+        console.log(bubing_num + '人开始战斗')
+    }
+    lian.lianzhang = function (mingling) {
+        lian[mingling.type](mingling.num);
+    }
+    //总司令开始发令
+    lian.lianzhang({
+        type: 'paobing',
+        num: 100
+    })
+    lian.lianzhang({
+        type: 'bubing',
+        num: 400
+    })
+</script>
+</body>
+</html>

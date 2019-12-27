@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-匀速运动之透明度</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    #div1 {
+        width: 150px;
+        height: 150px;
+        background-color: green;
+        opacity: .3;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    }
+</style>
+<script>
+    window.onload = function () {
+        var oDiv = document.getElementById('div1');
+        oDiv.onmouseover = function () {
+            startMove(100);
+        }
+        oDiv.onmouseout = function () {
+            startMove(30);
+        }
+    }
+    var alpha = 30;//透明度没有offsetAlpha这样的属性值，所以用变量假设透明度值
+    var timer = null;
+    function startMove(iTarget) {
+        var oDiv = document.getElementById('div1');
+        clearInterval(timer);
+        timer = setInterval(function () {
+            var speed = 0;
+            //如果透明度大于目标值，透明度变化速度递减，否则递增
+            if (alpha > iTarget) {
+                speed = -10;
+            } else {
+                speed = 10;
+            }
+            //如果透明度和目标值相等，清除定时器，否则透明度值就等于速度值相加并设置样式
+            if (alpha == iTarget) {
+                clearInterval(timer);
+            } else {
+                alpha += speed;
+                oDiv.style.filter = 'alpha(opacity: '+alpha+')';
+                oDiv.style.opacity = alpha / 100;
+            }
+        }, 300)
+    }
+</script>
+<body>
+<div id="div1">
+</div>
+</body>
+</html>

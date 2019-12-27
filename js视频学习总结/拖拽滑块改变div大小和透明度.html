@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-拖拽滑块改变div大小和透明度</title>
+    <script src="js/perfectMove.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    #div1 {
+        width: 500px;
+        height: 20px;
+        margin: 0 auto;
+        position: relative;
+        background-color: #ccc;
+    }
+    #div2 {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        background-color: #f00;
+    }
+    #div3 {
+        width: 0;
+        height: 0;
+        float: left;
+        background: green;
+    }
+    #div4 {
+        width: 200px;
+        height: 200px;
+        background-color: #f00;
+        float: left;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+</style>
+<script>
+window.onload = function () {
+    var oDiv = document.getElementById('div1');
+    var oSlider = document.getElementById('div2');
+    var oDiv3 = document.getElementById('div3');
+    var oDiv4 = document.getElementById('div4');
+    oSlider.onmousedown = function (e) {
+        var e = e || event;
+        var disX = e.clientX - oSlider.offsetLeft;
+        var disY = e.clientY - oSlider.offsetTop;
+        document.onmousemove = function (e) {
+            var l = e.clientX - disX;
+            var t = e.clientY - disY;
+            if (l < 0) {
+                l = 0;
+            } else if (l > oDiv.offsetWidth - oSlider.offsetWidth) {
+                // debugger
+                l = oDiv.offsetWidth - oSlider.offsetWidth;
+            }
+            if (t < 0 || t > 0) {
+                t = 0;
+            }
+            oSlider.style.left = l + 'px';
+            oSlider.style.top = t + 'px';
+            //拖动滑块改变div宽高
+            oDiv3.style.width = l + 'px';
+            oDiv3.style.height = l + 'px';
+
+            //拖动滑块改变div的透明度：用滑块向左移动的距离/滑块到最后一个位置的宽度
+            var scale = l/(oDiv.offsetWidth - oSlider.offsetWidth);
+            oDiv4.style.filter = 'alpha(opacity='+scale*100+')';
+            oDiv4.style.opacity = scale;
+        }
+        document.onmouseup = function () {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+    }
+
+}
+</script>
+<body>
+<div id="div1">
+    <div id="div2"></div>
+</div>
+<div id="div3"></div>
+<div id="div4"></div>
+</body>
+</html>

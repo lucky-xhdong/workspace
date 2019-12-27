@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-多物体运动之多属性任意值控制</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    div {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        float: left;
+        background-color: green;
+        opacity: .3;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    }
+</style>
+<script>
+    window.onload = function () {
+        var oDiv1 = document.getElementById('div1');
+        oDiv1.onmouseover = function() {
+            startMove(this, 'opacity', 100)
+        }
+        oDiv1.onmouseout = function() {
+            startMove(this, 'opacity', 30)
+        }
+        var oDiv2 = document.getElementById('div2');
+        oDiv2.onmouseover = function() {
+            startMove(this, 'width', 300)
+        }
+        oDiv2.onmouseout = function() {
+            startMove(this, 'width', 100)
+        }
+    }
+    function getStyle(obj, name) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[name];
+        } else {
+            return getComputedStyle(obj, false)[name]
+        }
+    }
+    //1.将想要设置的属性值作为参数传递到函数中控制
+    //2.如果传递进来的属性值是opacity，还能正常运行么？
+    //2.1针对传递进来的opacity属性单独处理
+    //2.2计算中存储容量有限，不能真正存储小数，他只能存储小数的一个近似值，所以会有误差需要四舍五入处理(所有计算设备都存在类似问题)
+    //如：0.07*100==>?
+
+
+    function startMove(obj, attr, iTarget) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var cur = 0;
+            if (attr == 'opacity') {
+                // cur = parseFloat(getStyle(obj, attr)) * 100;
+                cur = Math.round(parseFloat(getStyle(obj, attr)) * 100);
+            } else {
+                cur = parseInt(getStyle(obj, attr));
+            }
+            var speed = (iTarget - cur) / 6;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            if (cur == iTarget) {
+                clearInterval(obj.timer);
+            } else {
+                if (attr == 'opacity') {
+                    obj.style.filter = 'alpha(opacity: '+ (cur + speed) +')';
+                    obj.style[attr] = (cur + speed) / 100;
+                } else {
+                    obj.style[attr] = cur + speed + 'px'
+                }
+            }
+        }, 30)
+    }
+</script>
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+</body>
+</html>

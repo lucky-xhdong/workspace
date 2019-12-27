@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-对联悬浮框</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+</style>
+<script>
+    //分析
+    // 距离大，速度大
+    // 距离小，速度小
+    window.onscroll = function () {
+        var oDiv = document.getElementById('div1');
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;//兼容
+        //top值 = 可视区的clientHeight - 该div自身的高度offsetHeight + 向上滚动的高度
+        // oDiv.style.top = document.documentElement.clientHeight - oDiv.offsetHeight + scrollTop + 'px';
+        startMove(parseInt((document.documentElement.clientHeight - oDiv.offsetHeight) / 2 + scrollTop));
+    }
+    var timer = null;
+    function startMove(iTarget) {
+        var oDiv = document.getElementById('div1');
+        clearInterval(timer);
+        timer = setInterval(function () {
+            //滚动的速度=(目标值-该div自身滚动的高度)/系数值，系数值随意设置，值越大速度小，值越小速度越快
+            var speed = (iTarget - oDiv.offsetTop) / 4;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            //如果div滚动的高度和目标值相等，清除定时器暂停滚动
+            if (oDiv.offsetTop == iTarget) {
+                clearInterval(timer);
+            } else {
+                oDiv.style.top = oDiv.offsetTop + speed + 'px';
+            }
+        }, 30)
+    }
+</script>
+<body style="height: 2000px">
+<div id="div1"></div>
+</body>
+</html>

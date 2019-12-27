@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    body {
+        margin: 0;
+        text-align: center;
+    }
+    #canvas {
+        background-color: #f9f9f9;
+        border: 5px solid #f0f;
+        margin: 0 auto;
+    }
+</style>
+<body>
+
+<div class="canvaswraper">
+    <canvas id="canvas">
+        Your browser doesn't surport canvas!
+    </canvas>
+</div>
+<script>
+    window.onload = function(){
+        var canvas = document.getElementById('canvas');
+        canvas.width = 500;
+        canvas.height = 500;
+        if(canvas.getContext) {
+            var context = canvas.getContext('2d');
+
+            context.fillStyle = '#1c94c4';
+
+            //左边头
+            context.beginPath();
+            context.arc(105, 75, 35, Math.PI/2, Math.PI*1.5, false);
+            context.fill();
+
+            //右边头
+            context.beginPath();
+            context.arc(110, 75, 35, Math.PI*1.5, Math.PI/2, false);
+            context.fill();
+
+            //躯干
+            context.beginPath();
+            context.rect(80, 120, 55, 100);
+            context.fill();
+
+            //画左臂
+            context.beginPath();
+            context.rect(25,140,50,20);
+            context.fill();
+
+            //画右臂
+            context.beginPath();
+            context.rect(140,140,50,20);
+            context.fill();
+
+            //画左腿
+            context.beginPath();
+            context.rect(80,225,20,80);
+            context.fill();
+
+            //画右腿
+            context.beginPath();
+            context.rect(115,225,20,80);
+            context.fill();
+
+
+            //添加事件响应
+            canvas.addEventListener('click', function(event){
+                var pos = getEventPosition(event);
+                reDraw(pos, context);
+            })
+        }
+    }
+
+
+
+    //获取元素位置
+    function getEventPosition(event){
+        var x, y;
+        if(event.layerX || event.layerX == 0) {
+            x = event.layerX;
+            y = event.layerY;
+        }else if(event.offsetX || event.offsetX == 0){
+            x = event.offsetX;
+            y = event.offsetY;
+        }
+        return {x: x, y: y};
+
+    }
+
+    //重绘
+    function reDraw(pos, context){
+        arr = [
+            //左头
+            {x:105, y:75, width:Math.PI/2, height:Math.PI*1.5},
+
+            //右头
+            {x:110, y:75, width:Math.PI*1.5, height:Math.PI/2},
+
+            //躯干
+            {x:80, y:120, width:55, height:100},
+
+            //左臂
+            {x:25, y:140, width:50, height:20},
+
+            //右臂
+            {x:140, y:140, width:50, height:20},
+
+            //左腿
+            {x:80, y:225, width:20, height:80},
+
+            //右腿
+            {x:115, y:225, width:20, height:80}
+        ];
+
+        var whicharr = [];//保存序号的数组，这样，即使一次点多个，也能保存——本例中只能每次点一个
+        for( var i = 0; i < arr.length; i++ ){
+            if(i < 2) {
+                //用圆画头
+                context.fillStyle = '#1c94c4';
+                context.beginPath();
+                context.arc(arr[i].x, arr[i].y, 35, arr[i].width, arr[i].height, false);
+                context.fill();
+
+                if (pos && context.isPointInPath(pos.x, pos.y)) {
+                    whicharr.push(i);
+
+                    //修改点中区域的颜色
+                    context.fillStyle = '#F39814';
+                    context.beginPath();
+                    context.arc(arr[i].x, arr[i].y, 35, arr[i].width, arr[i].height, false);
+                    context.fill();
+                }
+            }else{
+                context.fillStyle = '#1c94c4';
+                context.beginPath();
+                context.rect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+                context.fill();
+
+                if (pos && context.isPointInPath(pos.x, pos.y)) {
+                    whicharr.push(i);
+
+                    //修改点中区域的颜色
+                    context.fillStyle = '#F39814';
+                    context.beginPath();
+                    context.rect(arr[i].x, arr[i].y, arr[i].width, arr[i].height);
+                    context.fill();
+                }
+
+            }
+        }
+
+        alert("click:"+ whicharr[0]);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>构造函数模式</title>
+</head>
+<body>
+<script>
+    //1.用于创建特定类型的对象
+    //2.注意命名规范
+    //3.js开发的时候尽量使用单引号，即使我们自己写的是双引号也会被转换成单引号
+    //4.js里的构造函数比较特殊的地方 new
+    //5.其他的语言里 比如php
+    function zaomen(huawen) {
+        //如果 不使用new
+        if (!(this instanceof zaomen)) {
+            return new zaomen();
+        }
+        var _huawen = '普通';
+        if (huawen) {
+            _huawen = huawen;
+        }
+        this.suo = '普通';
+        this.huawen = _huawen;
+        this.create = function () {
+            return '[锁头]'+ this.suo + '[花纹]' + this.huawen;
+        }
+    }
+    // var xiaozhang = zaomen();//没有使用new实例化对象
+    var xiaozhang = new zaomen();
+
+    var xiaoli = new zaomen('格子');
+    console.log(xiaozhang.create())
+    console.log(xiaoli.create())
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>职责链模式</title>
+</head>
+<body>
+<script>
+    //老板
+    function laoban(xiangmujingli) {
+        if (xiangmujingli) {
+            this.xiangmujingli = xiangmujingli;
+        }
+    }
+    laoban.prototype.write = function (php) {
+        this.xiangmujingli.write(php);
+    }
+
+    //项目经理
+    function xiangmujingli(coder) {
+        if (coder) {
+            this.coder = coder;
+        }
+    }
+    xiangmujingli.prototype.write = function (php) {
+        this.coder.write(php);
+    }
+
+    //苦逼的程序员
+    function coder() {
+
+    }
+    coder.prototype.write = function (php) {
+        console.log('coding...' + php);
+    };
+
+    //begin发起 coder来结束
+    var begin = new laoban(new xiangmujingli(new coder()));
+    begin.write('php')
+</script>
+</body>
+</html>

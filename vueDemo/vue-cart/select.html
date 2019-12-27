@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+<label id="app">
+    <select v-model="select" >
+        <option :value="item" v-for="item in options">{{item.val}}</option>
+    </select>
+    <div>嗯嗯：{{select.val}}{{select.text}}</div>
+</label>
+<script>
+    new Vue({
+        el: '#app',
+        data () {
+            return {
+                select:{text: '1', val: 'CSS' },
+                options: [
+                    { text: '1', val: 'CSS' },
+                    { text: '2', val: 'HTML' },
+                    { text: '3', val: 'JavaScript' }
+                ]
+            }
+        }
+    })
+</script>
+</body>
+</html> 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数传参-传多个参数</title>
+    <link rel="stylesheet" href="css/css1.css">
+</head>
+<body>
+<style>
+    #div1 {
+        width: 200px;
+        height: 200px;
+        border: 1px solid #ccc;
+        background-color: red;
+    }
+</style>
+<script>
+    function setStyle(name, value) {
+        var oDiv = document.getElementById('div1');
+        oDiv.style.name = value;
+    }
+</script>
+<input type="button" value="变宽" onclick="setStyle('width', 'green')">
+<input type="button" value="变高" onclick="setStyle('yellow')">
+<input type="button" value="变绿" onclick="setStyle('black')">
+<div id="div1"></div>
+</body>
+</html>

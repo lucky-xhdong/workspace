@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-简单拖拽</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background: red;
+        position: absolute;
+    }
+</style>
+<script>
+window.onload = function () {
+    var oDiv = document.getElementById('div1');
+    //鼠标移动的距离是鼠标所在的位置距离浏览器最左上角的距离，这个距离由一个横向距离和一个纵向距离两条线组成
+    var disX = 0;
+    var disY = 0;
+
+    //问题1：如果事件直接添加在div上，如果移动太快，鼠标超出div所在的范围，会停顿，所以正常鼠标移动事件应该添加在document
+    //问题2：在firefox上拖拽空div会出现半透明div的问题，需要在onmousedown时阻止默认事件
+    //问题3：怎么样防止用户将div拖出浏览器外
+    oDiv.onmousedown = function (e) {
+        var e = e || event;
+        //横向距离是鼠标的位置-div所在的位置
+        disX = e.clientX - oDiv.offsetLeft;
+        disY = e.clientY - oDiv.offsetTop;
+        //问题1
+        document.onmousemove = function (e) {
+            var e = e || event;
+            //存储div所在的位置
+            var l = e.clientX - disX;
+            var t = e.clientY - disY;
+            //问题3
+            //如果从左边超出，将div距离左边的位置置为0
+            if (l < 0) {
+                l = 0;
+            }
+            //如果从右边超出，将div距离右边的位置直接等于右边的最大值
+            else if (l > document.documentElement.clientWidth - oDiv.offsetWidth) {
+                l = document.documentElement.clientWidth - oDiv.offsetWidth;
+            }
+            //如果从顶部超出，将div距离顶上的位置置为0
+            if (t < 0) {
+                t = 0;
+            }
+            //如果从底部超出，将div距离底部的位置直接等于底部的最大值
+            else if (t > document.documentElement.clientHeight - oDiv.offsetHeight) {
+                t = document.documentElement.clientHeight - oDiv.offsetHeight;
+            }
+            oDiv.style.left = l + 'px';
+            oDiv.style.top = t + 'px';
+        };
+        document.onmouseup = function () {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        };
+        //问题2
+        return false;
+    }
+
+}
+</script>
+<body>
+<div id="div1"></div>
+</body>
+</html>

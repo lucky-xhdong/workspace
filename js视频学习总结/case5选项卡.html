@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡</title>
+</head>
+<style>
+    #div1 .active {
+        background: yellow;
+    }
+    #div1 div {
+        display: none;
+        vertical-align: middle;
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        border: 1px solid #999;
+        margin: 10px;
+    }
+</style>
+<script>
+    window.onload = function () {
+        var oDiv = document.getElementById('div1');
+        var aBtn = oDiv.getElementsByTagName('input');
+        var aDiv = oDiv.getElementsByTagName('div');
+
+        for (var i = 0; i < aBtn.length; i++) {
+            aBtn[i].index = i;//直接添加在html上的自定义属性不可操作，但在js里添加的自定义属性可操作
+            aBtn[i].onclick = function () {
+                for (var i = 0; i < aBtn.length; i++) {
+                    aBtn[i].className = '';
+                    aDiv[i].style.display = 'none';
+                }
+                this.className = 'active';
+                //直接添加在html上的自定义属性不可操作，但在js里添加的自定义属性可操作
+                aDiv[this.index].style.display='inline-block';
+            }
+        }
+    }
+</script>
+<body>
+<div id="div1">
+    <input class="active" type="button" value="教育">
+    <input type="button" value="培训">
+    <input type="button" value="招生">
+    <input type="button" value="出国">
+    <br>
+    <div style="display: inline-block;">111</div>
+    <div>222</div>
+    <div>333</div>
+    <div>444</div>
+</div>
+</body>
+</html>

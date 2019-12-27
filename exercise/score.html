@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+<div class="form-user-items">
+    <span class="user-item-right" id="gradecontent">
+    <img src="http://115.29.99.175/icarema/media/images/star_y.png" class="grade" data-value="1">
+    <img src="http://115.29.99.175/icarema/media/images/star_y.png" class="grade" data-value="2">
+    <img src="http://115.29.99.175/icarema/media/images/star_y.png" class="grade" data-value="3">
+    <img src="http://115.29.99.175/icarema/media/images/star_y.png" class="grade" data-value="4">
+    <img src="http://115.29.99.175/icarema/media/images/star_y.png" class="grade" data-value="5">
+</span>
+</div>
+
+<div class="table-responsive" style="min-height: .01%; overflow-x: auto;">
+    <table class="table" style='width: 100%; max-width: 100%; border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd; font: 14px "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;'>
+        <thead>
+            <tr>
+                <th style="border-bottom: 2px solid #ddd; font-weight: bold; text-align: left;vertical-align: bottom; padding: 8px;">#</th>
+                <th style="border-bottom: 2px solid #ddd; font-weight: bold; text-align: left;vertical-align: bottom; padding: 8px;">First Name</th>
+                <th style="border-bottom: 2px solid #ddd; font-weight: bold; text-align: left;vertical-align: bottom; padding: 8px;">Last Name</th>
+                <th style="border-bottom: 2px solid #ddd; font-weight: bold; text-align: left;vertical-align: bottom; padding: 8px;">Username</th>
+                <th style="border-bottom: 2px solid #ddd; font-weight: bold; text-align: left;vertical-align: bottom; padding: 8px;">Username</th>
+                <th style="border-bottom: 2px solid #ddd; font-weight: bold; text-align: left;vertical-align: bottom; padding: 8px;">Username</th>
+                <th style="border-bottom: 2px solid #ddd; font-weight: bold; text-align: left;vertical-align: bottom; padding: 8px;">Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row" style="padding: 8px; border-bottom: 1px solid #ddd;">1</th>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Mark</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Otto</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@mdo</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@mdo</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@mdo</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row" style="padding: 8px; border-bottom: 1px solid #ddd;">2</th>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Jacob</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Thornton</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@fat</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@fat</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@fat</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@fat</td>
+            </tr>
+            <tr>
+                <th scope="row" style="padding: 8px; border-bottom: 1px solid #ddd;">3</th>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">Larry</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">the Bird</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@twitter</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@twitter</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@twitter</td>
+                <td style="padding: 8px; border-bottom: 1px solid #ddd;">@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(".form-user-items").undelegate(".grade", 'click').delegate(".grade", 'click', function(){
+        var value = parseInt($(this).data('value'));
+        var string = '';
+        for(var i=0;i<value;i++){
+            string += ' <img src="http://115.29.99.175/icarema/media/images/star_y.png" class="grade" data-value="'+(i+1)+'"> ';
+        }
+        for(var i=value;i< 5;i++){
+            string += ' <img src="http://115.29.99.175/icarema/media/images/star_g.png" class="grade" data-value="'+(i+1)+'"> ';
+        }
+        $("#gradecontent").html(string);
+        $("#score").val(value);
+    });
+</script>
+
+</body>
+</html>

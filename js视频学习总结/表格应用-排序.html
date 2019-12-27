@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格应用-排序</title>
+</head>
+<script>
+    window.onload = function () {
+        var oTab = document.getElementById('tab1');
+        var oBtn = document.getElementById('btn1');
+        var arr = [];
+        oBtn.onclick = function () {
+            for (var i = 0; i < oTab.tBodies[0].rows.length; i++) {
+                arr[i] = oTab.tBodies[0].rows[i];
+            }
+            console.log(arr)
+            arr.sort(function (tr1, tr2) {
+                var n1 = parseInt(tr1.cells[0].innerHTML);
+                var n2 = parseInt(tr2.cells[0].innerHTML);
+                return n1-n2;
+            });
+            for (var i = 0; i < arr.length; i++) {
+                oTab.tBodies[0].appendChild(arr[i]);
+            }
+        }
+
+        // var oBtn = document.getElementById('btn1');
+        //
+        // var oUl = document.getElementById('ul1');
+        // var aLi = oUl.getElementsByTagName('li');
+        // var arr = [];
+        // oBtn.onclick = function () {
+        //     for (var i = 0; i < aLi.length; i++) {
+        //         arr[i] = aLi[i];
+        //     }
+        //     arr.sort(function (li1, li2) {
+        //         var n1 = parseInt(li1.innerHTML);
+        //         var n2 = parseInt(li2.innerHTML);
+        //         return n1-n2;
+        //     });
+        //     for (var i = 0; i < arr.length; i++) {
+        //         oUl.appendChild(arr[i]);
+        //     }
+        // }
+    }
+</script>
+<body>
+<input type="button" id="btn1" value="排序">
+<table border="1" id="tab1" width="500">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>2</td>
+        <td>李四</td>
+        <td>20</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>王麻子</td>
+        <td>22</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>王五</td>
+        <td>20</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>张三</td>
+        <td>20</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>六福</td>
+        <td>33</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>xhdong</td>
+        <td>20</td>
+        <td><a href="javascript:;">删除</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<ul id="ul1">
+    <li>10</li>
+    <li>2</li>
+    <li>20</li>
+    <li>24</li>
+    <li>56</li>
+    <li>64</li>
+    <li>36</li>
+    <li>28</li>
+    <li>87</li>
+    <li>53</li>
+</ul>
+</body>
+</html>

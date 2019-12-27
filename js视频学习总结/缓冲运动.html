@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-缓冲运动</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        position: absolute;
+        left: 600px;
+        top: 50px;
+        opacity: .3;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    }
+    #div2 {
+        width: 1px;
+        height: 300px;
+        position: absolute;
+        background-color: #000;
+        left: 300px;
+        top: 0;
+    }
+</style>
+<script>
+    //分析
+    // 距离大，速度大
+    // 距离小，速度小
+    window.onload = function () {
+        var oBtn = document.getElementById('btn1');
+        oBtn.onclick = function () {
+            startMove();
+        }
+    }
+    var timer = null;
+    function startMove() {
+        var oDiv = document.getElementById('div1');
+        clearInterval(timer);
+        timer = setInterval(function () {
+            //如果想要元素从当前位置走到目标位置，比如300px，那么从当前位置走到目标位置的距离就是目标位置减去当前位置，然后用位置做速度
+            //物体运动过程中，速度如果为小数，left值也会为小数不能准确到达目标位置，比如出现290.9px会被算做290px并不会被四舍五入计算，而是直接去掉后面的小数部分
+            //所以缓冲运动需要将速度做向上/下取整处理
+            var speed = (300 - oDiv.offsetLeft)/10;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            oDiv.style.left = oDiv.offsetLeft + speed + 'px';
+            document.title = oDiv.offsetLeft + speed;
+        }, 30)
+    }
+</script>
+<body>
+<input type="button" value="开始运动" id="btn1">
+<div id="div1"></div>
+<div id="div2"></div>
+</body>
+</html>

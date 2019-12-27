@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/vue.js"></script>
+    <title>Title</title>
+</head>
+<style>
+    ul li {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 10px;
+    }
+    ul li a {
+        color: #666;
+    }
+    ul li.active a {
+        color: #f00;
+    }
+    table {
+        width: 500px;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+    table tr td {
+        text-align: center;
+        padding: 15px 5px;
+        border: 1px solid #eee;
+    }
+    table tr td .cell {
+        display: block;
+        color: #666;
+        text-decoration: none;
+    }
+    table tr td .cell.active {
+        background-color: #f00;
+    }
+    table tr td .cell:hover {
+        text-decoration: underline;
+    }
+    .btnBox .btn.isActive {
+        color: #f00;
+    }
+</style>
+<body>
+<div id="app">
+    <div class="btnBox">
+        <ul>
+            <li v-for="(item,index) in msg">
+                <span class="btn"  v-for="(item1,index1) in item.list"
+                      :class="{ isActive:item.isChange == index1}"
+                      @click="isChoose(index1, item1, item)">{{item1.name}}
+                </span>
+            </li>
+        </ul>
+    </div>
+    <!--{{tableData}}-->
+    <table>
+        <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
+            <td v-for="(column, columnIndex) in row.list" :key="columnIndex">
+                <a href="javascript:;" class="cell"
+                   v-if="column.status === 1"
+                   :class="{active: row.isChecked == columnIndex}"
+                   @click="select(row, column, rowIndex, columnIndex)">{{column.shiftName}}</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    let aSelected = [], limit = 0
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: [
+                {
+                    isChange: -1,
+                    list: [
+                        {
+                            name: '项目1', id: 1, checked: false
+                        }, {
+                            name: '项目2', id: 2, checked: false
+                        }, {
+                            name: '项目3', id: 3, checked: false
+                        }
+                    ]
+                },
+                {
+                    isChange: -1,
+                    list: [
+                        {
+                            name: '项目1', id: 1, checked: false
+                        }, {
+                            name: '项目2', id: 2, checked: false
+                        }, {
+                            name: '项目3', id: 3, checked: false
+                        }
+                    ]
+                },
+                {
+                    isChange: -1,
+                    list: [
+                        {
+                            name: '项目1', id: 1, checked: false
+                        }, {
+                            name: '项目2', id: 2, checked: false
+                        }, {
+                            name: '项目3', id: 3, checked: false
+                        }
+                    ]
+                },
+            ],
+            isChange: -1,
+            listData: [
+                {
+                    shiftName: '早1',
+                    status: 1,
+                    checked: false
+                },
+                {
+                    shiftName: '早2',
+                    status: 1,
+                    checked: false
+                },
+                {
+                    shiftName: '早3',
+                    status: 2,
+                    checked: false
+                },
+                {
+                    shiftName: '早4',
+                    status: 2,
+                    checked: false
+                },
+                {
+                    shiftName: '早5',
+                    status: 1,
+                    checked: false
+                }
+            ],
+            tableData: [
+                {
+                    isChecked: -1,
+                    list: [
+                        {
+                            row: 0,
+                            column: 0,
+                            shiftName: '早1',
+                            status: 1,
+                            checked: false
+                        },
+                        {
+                            row: 0,
+                            column: 1,
+                            shiftName: '早2',
+                            status: 1,
+                            checked: false
+                        },
+                        {
+                            row: 0,
+                            column: 2,
+                            shiftName: '早3',
+                            status: 2,
+                            checked: false
+                        },
+                        {
+                            row: 0,
+                            column: 3,
+                            shiftName: '早4',
+                            status: 2,
+                            checked: false
+                        },
+                        {
+                            row: 0,
+                            column: 4,
+                            shiftName: '早5',
+                            status: 1,
+                            checked: false
+                        }
+                    ]
+                },
+                {
+                    isChecked: -1,
+                    list: [
+                        {
+                            row: 1,
+                            column: 0,
+                            shiftName: '晚1',
+                            status: 2,
+                            checked: false
+                        },
+                        {
+                            row: 1,
+                            column: 1,
+                            shiftName: '晚2',
+                            status: 2,
+                            checked: false
+                        },
+                        {
+                            row: 1,
+                            column: 2,
+                            shiftName: '晚3',
+                            status: 1,
+                            checked: false
+                        },
+                        {
+                            row: 1,
+                            column: 3,
+                            shiftName: '晚4',
+                            status: 1,
+                            checked: false
+                        },
+                        {
+                            row: 1,
+                            column: 4,
+                            shiftName: '晚5',
+                            status: 1,
+                            checked: false
+                        }
+                    ]
+                },
+                {
+                    isChecked: -1,
+                    list: [
+                        {
+                            row: 2,
+                            column: 0,
+                            shiftName: '夜1',
+                            status: 1,
+                            checked: false
+                        },
+                        {
+                            row: 2,
+                            column: 1,
+                            shiftName: '夜2',
+                            status: 2,
+                            checked: false
+                        },
+                        {
+                            row: 2,
+                            column: 3,
+                            shiftName: '夜3',
+                            status: 2,
+                            checked: false
+                        },
+                        {
+                            row: 2,
+                            column: 4,
+                            shiftName: '夜4',
+                            status: 2,
+                            checked: false
+                        },
+                        {
+                            row: 2,
+                            column: 5,
+                            shiftName: '夜5',
+                            status: 1,
+                            checked: false
+                        }
+                    ]
+                }
+
+            ]
+        },
+        created() {
+        },
+        methods: {
+            // index是当前选中项
+            isChoose1(index, item) {
+                if (index != item.isChange) {
+                    item.isChange = index;
+                } else {
+                    item.isChange = -1;
+                }
+            },
+            // index是当前选中项
+            isChoose(index,item, row) {
+                console.log(row)
+                if (index != row.isChange) {
+                    row.isChange = index;
+                } else {
+                    row.isChange = -1;
+                    item.checked = false
+                }
+            },
+            select(row, column, rowIndex, columnIndex) {
+                // 首先清空所有项的选中状态
+                this.tableData.forEach((item, index) => {
+                    item.list.forEach((item1, index1) => {
+                        item1.checked = false;
+                    })
+                })
+                // 将获取到数组里删掉取消选中的格子
+                aSelected.forEach((item, index) => {
+                    if (item.checked === false && item.row === rowIndex) {
+                        aSelected.splice(index, 1)
+                    }
+                })
+                // 给当前选中项添加选中状态 如果已经选择2个就不让再添加
+                if (columnIndex != row.isChecked) {
+                    if (aSelected.length === 2) {
+                        alert('您已选择两个班次，是否申请换班？')
+                        return false
+                    } else {
+                        row.isChecked = columnIndex;
+                        column.checked = true;
+                        aSelected.push(column);
+                    }
+                    console.log(aSelected.length)
+                } else {
+                    row.isChecked = -1;
+                    column.checked = false;
+                }
+                console.log(aSelected)
+            }
+        }
+    });
+</script>
+</html>

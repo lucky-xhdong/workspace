@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正则表达式</title>
+</head>
+<body>
+<script>
+    // var str = 'abcdefafaf';
+    // console.log(str.search('d'))
+
+    //用普通方法查找字符串
+    var str = 'rqew 4123 rqwe43 re43 geg5 adsf21';
+    // var arr = [];
+    // var tmp = '';//临时字符串
+    // //循环字符串
+    // for (var i = 0; i < str.length; i++) {
+    //     //看看字符串的第i位，如果大于等于0并且小于并于9，则表示这一位是数字
+    //     if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+    //         //将其添加到临时字符串中
+    //         tmp += str.charAt(i);
+    //     } else {
+    //         //如果不是数字，但是tmp有值，将tmp的值添加到数组中去，将tmp置空避免重复添加
+    //         if (tmp) {
+    //             arr.push(tmp);
+    //             tmp = '';
+    //         }
+    //     }
+    // }
+    // //整个循环结束之后可能还会有数字，所以再判断一次
+    // if (tmp) {
+    //     arr.push(tmp);
+    //     tmp = '';
+    // }
+    // console.log(tmp)
+    // console.log(str.match(/\d+/g));
+    console.log(str.replace('a', '0'))
+</script>
+</body>
+</html>

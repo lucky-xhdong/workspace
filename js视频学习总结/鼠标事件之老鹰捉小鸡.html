@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-鼠标事件之老鹰捉小鸡</title>
+    <script src="js/perfectMove.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+    body {
+        overflow: hidden;
+    }
+    div {
+        width: 10px;
+        height: 10px;
+        background: red;
+        position: absolute;
+    }
+</style>
+<script>
+    function getPos(ev) {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+        return {
+            x: ev.clientX + scrollLeft,
+            y: ev.clientY + scrollTop
+        }
+    }
+    document.onmousemove = function(e) {
+        var e = e || event;
+        var aDiv = document.getElementsByTagName('div');
+        var pos = getPos(e);
+        //分析：一串div同时走，其实就是后一个div跟着前一个div走，而第一个div跟着鼠标走
+        //从最后一个div倒着循环
+        for (var i = aDiv.length - 1; i > 0; i--) {
+            //后一个div的样式是前一个div样式
+            aDiv[i].style.left = aDiv[i-1].offsetLeft + 'px';
+            aDiv[i].style.top = aDiv[i-1].offsetTop + 'px';
+        }
+        //第一个div跟着鼠标走
+        aDiv[0].style.left = pos.x + 'px';
+        aDiv[0].style.top = pos.y + 'px';
+    }
+    window.onload = function () {
+
+    }
+</script>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>

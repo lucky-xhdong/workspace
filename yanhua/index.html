@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于HTML5 canvas的逼真烟花特效插件</title>
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/demo.css">
+    <script src="js/html5.js"></script>
+</head>
+<body>
+
+<div class="demo">
+</div>
+
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/jquery.fireworks.js"></script>
+<!--[if lte IE 8]>
+<!--<script type="text/javascript" src="js/excanvas.js"></script>-->
+<![endif]-->
+<script type="text/javascript">
+    $('.demo').fireworks({
+        sound: false, // sound effect
+        opacity: 0.9,
+        width: '100%',
+        height: '100%'
+    });
+</script>
+</body>
+</html>

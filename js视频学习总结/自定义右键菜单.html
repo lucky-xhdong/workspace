@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-自定义右键菜单</title>
+    <script src="js/perfectMove.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+    .lists {
+        background-color: red;
+        position: absolute;
+        display: none;
+    }
+</style>
+<script>
+    //屏蔽鼠标右键菜单
+    document.oncontextmenu = function(e) {
+        var e = e || event;
+        var oDiv = document.getElementsByClassName('lists');
+        oDiv[0].style.display = 'block';
+        oDiv[0].style.left = e.clientX + 'px';
+        oDiv[0].style.top = e.clientY + 'px';
+        return false;
+    }
+    document.onclick = function () {
+        var oDiv = document.getElementsByClassName('lists');
+        oDiv[0].style.display = 'none';
+    }
+</script>
+<body>
+<div class="lists">
+    <ul>
+        <li><a href="javascript:;">这是一段文字！</a></li>
+        <li><a href="javascript:;">这是一段文字！</a></li>
+        <li><a href="javascript:;">这是一段文字！</a></li>
+        <li><a href="javascript:;">这是一段文字！</a></li>
+        <li><a href="javascript:;">这是一段文字！</a></li>
+        <li><a href="javascript:;">这是一段文字！</a></li>
+    </ul>
+</div>
+</body>
+</html>

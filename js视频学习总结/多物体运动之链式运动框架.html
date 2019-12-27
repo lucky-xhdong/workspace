@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-多物体运动之链式运动框架</title>
+    <script src="js/move.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        list-style: none;
+    }
+    body {
+        overflow: hidden;
+    }
+    #div {
+        width: 220px;
+        height: 220px;
+        background-color: #f00;
+    }
+    #btn {
+        position: fixed;
+        width: 40px;
+        height: 30px;
+        line-height: 30px;
+        right: 0;
+        bottom: 0;
+    }
+    #div1 {
+        width: 260px;
+        height: 315px;
+        position: fixed;
+        right: -220px;
+        bottom: -295px;
+        background-color: #f00;
+    }
+    #close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        text-decoration: none;
+        font-size: 20px;
+        color: #fff;
+    }
+</style>
+<script>
+    function getByClass(oParent, sClass) {
+        var aEle = oParent.getElementsByTagName('*');
+        var aResult = [];
+        for (var i = 0; i < aEle.length; i++) {
+            if (aEle[i].className == sClass) {
+                aResult.push(aEle[i]);
+            }
+        }
+        return aResult;
+    }
+    window.onload = function () {
+
+        var oDiv = document.getElementById('div');
+        oDiv.onmouseover = function () {
+            startMove(oDiv, 'width', 300, function () {
+                startMove(oDiv, 'height', 300)
+            })
+        }
+        oDiv.onmouseout = function () {
+            startMove(oDiv, 'height', 220, function () {
+                startMove(oDiv, 'width', 220)
+            })
+        }
+
+
+        var oBtn = document.getElementById('btn');
+        var oDiv1 = document.getElementById('div1');
+        var oClose = document.getElementById('close');
+
+        oBtn.onclick = function () {
+            startMove(oDiv1, 'right', 0, function () {
+                startMove(oDiv1, 'bottom', 0)
+            });
+        }
+        oClose.onclick = function () {
+            startMove(oDiv1, 'bottom', -295, function () {
+                startMove(oDiv1, 'right', -220)
+            });
+        }
+    }
+</script>
+<body>
+<div id="div"></div>
+<div class="pop" id="div1">
+    <a href="javascript:;" id="close">&times;</a>
+</div>
+<input type="button" id="btn" value="点击">
+</body>
+</html>

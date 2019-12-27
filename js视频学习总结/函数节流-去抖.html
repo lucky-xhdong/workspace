@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //函数去抖
+    var n = 0;
+
+    function debounce(method, delay) {
+        var timer = null;
+        return function () {
+            var context = this, args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                method.apply(context, args);
+            }, delay);
+        }
+    }
+
+    function resizehandler() {
+        console.log(++n);
+    }
+
+    window.onresize = debounce(resizehandler, 500);
+
+    //函数节流
+    // var n = 0;
+    //
+    // function throttle(method, duration) {
+    //     var begin = new Date();
+    //     return function () {
+    //         var context = this, args = arguments, current = new Date();
+    //         if (current - begin >= duration) {
+    //             method.apply(context, args);
+    //             begin = current;
+    //         }
+    //     }
+    // }
+    // function resizehandler(){
+    //     console.log(++n);
+    // }
+    // window.onresize=throttle(resizehandler,500);
+</script>
+</body>
+</html>

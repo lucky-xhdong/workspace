@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>面向对象--选项卡</title>
+</head>
+<style>
+    #div1 {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+    }
+    #div1 .active {
+        background-color: yellow;
+    }
+    #div1 div {
+        display: none;
+    }
+</style>
+<script>
+    // /**
+    //  * 普通选项卡
+    //  * 函数可以嵌套
+    //  * */
+    // window.onload = function () {
+    //     var oDiv = document.getElementById('div1');
+    //     var aBtn = oDiv.getElementsByTagName('input');
+    //     var aDiv = oDiv.getElementsByTagName('div');
+    //     for (var i = 0; i < aBtn.length; i++) {
+    //         aBtn[i].index = i;
+    //         aBtn[i].onclick = function () {
+    //             for (var j = 0; j < aBtn.length; j++) {
+    //                 aBtn[j].className = '';
+    //                 aDiv[j].style.display = 'none';
+    //             }
+    //             this.className = 'active';
+    //             aDiv[this.index].style.display = 'block';
+    //         }
+    //     }
+    // }
+
+    /**
+     * 使用面向对象思想写选项卡
+     * 1.函数不能嵌套，但可以有全局变量
+     * 2.将变量变成对象的属性
+     * 3.将函数变成对象的方法
+     * 4.this，事件，闭包，传参
+     * */
+
+    function TabSwitch(id) {
+        var _this = this;//this
+        this.oDiv = document.getElementById(id);
+        this.aBtn = this.oDiv.getElementsByTagName('input');
+        this.aDiv = this.oDiv.getElementsByTagName('div');
+        for (var i = 0; i < this.aBtn.length; i++) {
+            this.aBtn[i].index = i;
+            //事件
+            //闭包
+            this.aBtn[i].onclick = function () {
+                //传参
+                _this.fnClick(this);
+            };
+        }
+    };
+
+    TabSwitch.prototype.fnClick = function (oBtn) {
+        for (var j = 0; j < this.aBtn.length; j++) {
+            this.aBtn[j].className = '';
+            this.aDiv[j].style.display = 'none';
+        }
+        oBtn.className = 'active';
+        this.aDiv[oBtn.index].style.display = 'block';
+    };
+
+    window.onload = function () {
+        new TabSwitch('div1');
+    }
+</script>
+<body>
+<div id="div1">
+    <input type="button" value="aaa">
+    <input type="button" value="bbb">
+    <input type="button" value="ccc">
+    <input type="button" value="ddd">
+    <div style="display: block;">111</div>
+    <div>222</div>
+    <div>333</div>
+    <div>444</div>
+</div>
+
+
+
+</body>
+</html>

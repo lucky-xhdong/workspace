@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自制烟花特效</title>
+    <script src="js/jquery-1.11.0.min.js"></script>
+</head>
+<body style="background-color: #000;">
+<div class="yanhua"></div>
+<script>
+    (function () {
+        $.fn.yanhua = function () {
+            var initSize = 20;
+            var methods = {
+                //初始化颜色
+                initColor: function () {
+                    var defautlColor = ['0', '3', '6', '9', 'c', 'f'];
+                    var randomColor = [defautlColor[Math.floor(Math.random() * 100) % 6], '0', 'f'];
+                    randomColor.sort(function () {
+                        return Math.random() > .5 ? -1 : 1;
+                    })
+                    return '#' + randomColor.join('');
+                },
+                //初始化高度
+                initHeight: function () {
+                    var height = $(window).height() - 250;
+                    return Math.abs(Math.floor(Math.random() * height - 200)) + 201;
+                },
+                //初始化爆竹
+                initFirecracker: function () {
+                    var firecracker = "<div class='firecracker'></div>";
+                    $(document.body).append(firecracker);
+                    var width = $(window).width();
+                    $(".firecracker").css({
+                        position: 'absolute',
+                        bottom: 0,
+                        left: Math.floor(Math.random() * width) + 1 + 'px',
+                        color: this.initColor()
+                    })
+                    return firecracker;
+                },
+                //初始化上升状态
+                initRise: function () {
+                    var firecracker = this.initFirecracker();//准备好爆竹
+                    var height = this.initHeight();//爆竹上升的高度
+                    var color = this.initColor;//烟花颜色
+                    var explode = this.initExplode;//烟花爆炸过程
+                    var size = initSize;
+                    //爆竹升起来爆炸的过程
+                    var riseToExplode = function () {
+                        $(".firecracker").css({
+                            bottom: parseFloat($(".firecracker").css('bottom')) + height * 0.1 + 'px'
+                        })
+                        height -= height * .1;
+                        if(height < 2) {
+                            clearInterval(timer);
+                            explode($(".firecracker"), height, size, color);
+                        }
+                    }
+                    $(".firecracker").html("*");
+                    if(parseInt($(".firecracker").css('bottom')) < height) {
+                        var timer = setInterval(riseToExplode, 20);
+                    }
+                },
+                //烟花爆炸
+                initExplode: function (obj, height, size, color) {
+                    var count = Math.random() * size + 80;
+                    for(var i = 0; i < count.length; i++) {
+                        var particles = "<span class='particles'>*</span>";
+                        $(".particles").css({
+                            position: 'absolute',
+                            width: '3px',
+                            height: '3px',
+                            left: 0,
+                            top: 0
+                        })
+                        $(obj).append(particles);
+                        console.log(obj)
+                    }
+                    //烟花喷洒
+//                    function sprinkle() {
+//                        r += radiusSmall * .1;
+//                        ri += radiusSmall * .06;
+//                        rii += radiusSmall * .06;
+//                        $(".particles").css({
+//                            color: color,
+//                            left: r * Math.cos(360 / size) + 'px',
+//                            top: r * Math.sin(360 / size) + 'px',
+//                            fontSize: parseFloat($(".particles").css('font-size')) * .96 + 'px'
+//                        })
+//                        radiusSmall -= radiusSmall * .1;
+////                        if(radiusSmall < 2) {
+////                            $(obj).html('');
+////                            $(obj).parent().remove($(obj));
+////                        }
+//                        clearInterval(timer)
+//                    }
+//                    var timer = setInterval(sprinkle, 20);
+                }
+            }
+            methods.initRise();
+        }
+    })(jQuery)
+    $(document).ready(function () {
+        function happyNewYear() {
+            $(".yanhua").yanhua();
+        }
+        setInterval(happyNewYear, 10000);
+    })
+</script>
+</body>
+</html>

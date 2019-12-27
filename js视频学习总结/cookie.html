@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cookie</title>
+    <script src="js/cookie.js"></script>
+</head>
+<body>
+<form action="/" id="oForm">
+    用户名：<input type="text" name="user"><br>
+    密码：<input type="password" name="pass"><br>
+    <input type="submit" value="提交">
+</form>
+<script>
+    //使用cookie记住用户名
+    window.onload = function () {
+        // debugger
+        var oForm = document.getElementById('oForm');
+        var oUser = document.getElementsByName('user')[0];
+
+        oForm.onsubmit = function() {
+            setCookie('user', oUser.value, 1);
+        }
+        oUser.value = getCookie('user');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bom</title>
+</head>
+<body style="height: 10000px">
+<textarea name="" id="txt" cols="30" rows="10"></textarea>
+<input type="button" value="打开窗口" id="btn" onclick="window.close()">
+<script>
+    var oBtn = document.getElementById('btn');
+    var oTxt = document.getElementById('txt');
+    //open
+    oBtn.onclick = function () {
+        // // var oNewOpen = window.open('about:blank', '_blank');
+        // var oNewOpen = window.open('about:blank', '_blank');
+        // //新窗口的对象也有document
+        // oNewOpen.document.write(oTxt.value);
+
+        console.log(document.documentElement.clientWidth)
+        console.log(document.documentElement.scrollTop)
+
+        //右下角悬浮框
+        //悬浮框距离顶部的距离= 窗口的高度clientHeight-悬浮框本身的高度offsetHeight + scrollTop + 'px';
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+
+    }
+
+    //close
+
+
+</script>
+</body>
+</html>

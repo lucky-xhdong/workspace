@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+
+</head>
+<body>
+<input type="text" id="txt">
+<button type="button" id="btn">发送</button>
+<script>
+    var ws = new WebSocket('ws://localhost:8000');//创建websocket连接，，服务端的IP+端口号
+
+    // 连接建立时会调用onopen事件
+    // 在连接创建时给btn按钮绑定点击事件，用来将输入的信息推送给服务端
+    ws.onopen = function () {
+        let btn = document.getElementById('btn');
+        let txt = document.getElementById('txt');
+        btn.onclick = function() {
+            ws.send(txt.value)
+        }
+        ws.send('来自客户端的信息');
+
+    }
+    // 服务端给客户端推送消息：onmessage处理接收服务端推送过来的消息
+    ws.onmessage = function (e) {
+        var p = document.createElement('p');
+        p.innerHTML = e.data;
+        document.body.appendChild(p);
+        console.log(e.data)
+    }
+</script>
+</body>
+</html>

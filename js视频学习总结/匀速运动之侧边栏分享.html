@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-匀速运动之侧边栏分享</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    #div1 {
+        width: 150px;
+        height: 200px;
+        background-color: green;
+        position: absolute;
+        top: 0;
+        left: -150px;
+    }
+    #div1 span {
+        position: absolute;
+        width: 20px;
+        height: 60px;
+        line-height: 20px;
+        background-color: blue;
+        right: -20px;
+        top: 70px;
+        cursor: pointer;
+    }
+</style>
+<script>
+    //总结：
+    // 1.鼠标移入移出事件的共同点：都有目标值，都需要控制速度，所以鼠标移入移出时调用同一个函数将目标值和速度值作为参数传递调用同一个函数即可，
+    // 2.精简参数
+    window.onload = function () {
+        var oDiv = document.getElementById('div1');
+        oDiv.onmouseover = function () {
+            startMove(0);
+        }
+        oDiv.onmouseout = function () {
+            startMove(-150);
+        }
+    }
+    var timer = null;
+    function startMove(iTarget) {
+        var oDiv = document.getElementById('div1');
+        var speed = 0;
+        clearInterval(timer);
+        if (oDiv.offsetLeft > iTarget) {
+            speed = -10;
+        } else {
+            speed = 10;
+        }
+        timer = setInterval(function () {
+            if (oDiv.offsetLeft == iTarget) {
+                clearInterval(timer);
+            } else  {
+                oDiv.style.left = oDiv.offsetLeft + speed + 'px';
+            }
+        }, 30)
+    }
+</script>
+<body>
+<div id="div1">
+    <span>分享到</span>
+</div>
+</body>
+</html>

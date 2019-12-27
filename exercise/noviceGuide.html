@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.2.min.js"></script>
+</head>
+<style>
+    .page {
+        width: 1000px;
+        height: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    #mask {
+        width: 1000px;
+        height: 800px;
+        position: absolute;
+        left: 50%;
+        margin-left: -500px;
+        background-color: #000;
+        opacity: .5;
+        filter: alpha(opacity = 50);
+        top: 0;
+    }
+    #guide {
+        position: absolute;
+        width: 1000px;
+        height: 800px;
+        left: 50%;
+        margin-left: -500px;
+        top: 0;
+    }
+    .first {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background-color: brown;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+    .second {
+        width: 200px;
+        height: 100px;
+        position: absolute;
+        background-color: brown;
+        top: 150px;
+        left: 100px;
+        z-index: 1;
+    }
+    .third {
+        width: 400px;
+        height: 200px;
+        position: absolute;
+        background-color: aqua;
+        top: 300px;
+        left: 200px;
+        z-index: 1;
+    }
+    .forth {
+        width: 200px;
+        height: 100px;
+        position: absolute;
+        background-color: burlywood;
+        top: 500px;
+        right: 100px;
+        z-index: 1;
+    }
+    .fifth {
+        width: 400px;
+        height: 200px;
+        position: absolute;
+        background-color: darkcyan;
+        top: 0;
+        right: 0;
+        z-index: 1;
+    }
+    #mask,
+    #guide,
+    .first,
+    .second,
+    .third,
+    .forth,
+    .fifth {
+        display: none;
+    }
+    .close {
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-color: chocolate;
+        float: right;
+        cursor: pointer;
+        text-align: center;
+    }
+</style>
+<script>
+
+</script>
+<body>
+    <div class="page">这里是网页内容</div>
+    <div id="guide">
+        <div class="first steps"><a href="javascript:;">下一步</a><span class="close">&times;</span></div>
+        <div class="second steps"><a href="javascript:;">下一步</a><span class="close">&times;</span></div>
+        <div class="third steps"><a href="javascript:;">下一步</a><span class="close">&times;</span></div>
+        <div class="forth steps"><a href="javascript:;">下一步</a><span class="close">&times;</span></div>
+        <div class="fifth steps"><a href="javascript:;">下一步</a><span class="close">&times;</span></div>
+    </div>
+    <div id="mask">
+    </div>
+<script>
+//    window.onload = function(){
+//        var mask = document.getElementById('mask');
+//        var guide = document.getElementById('guide');
+//        var step = document.getElementsByClassName('steps');
+//        var a = document.getElementsByTagName('a');
+//        var close = document.getElementsByTagName('span');
+//
+//        //读取cookie
+//        var cookie = document.cookie.substring(5);//从第5个开始读取（substring读取字符串）
+//
+//        if(cookie != 'wwww.baidu.com'){
+//
+//            mask.style.display = guide.style.display = step[0].style.display = 'block';
+//
+//            for(var i = 0; i < step.length; i++){
+//                a[i].index = i;
+//                a[i].onclick = function () {
+//                    this.parentNode.style.display = 'none';
+//                    if(this.index < step.length - 1){
+//                        step[this.index + 1].style.display = 'block';
+//                    }else if(this.index == step.length - 1) {
+//                        mask.style.display = guide.style.display = step[0].style.display = 'none';
+//                    }
+//                }
+//            }
+//
+//            for(var i = 0; i < close.length; i++){
+//                close[i].onclick = function(){
+//                    mask.style.display = guide.style.display = step[0].style.display = 'none';
+//                }
+//            }
+//
+//            var date = new Date();
+//            date.setDate(date.getDate() + 30);
+//            document.cookie = 'name=www.baidu.com;expires=30'+date;//expires表示失效时间
+//        }else {
+//            return;
+//        }
+//
+//    }
+
+    $(document).ready(function () {
+        $("#mask, #guide, .steps:eq(0)").css({"display":"block"});
+
+        var cookie = document.cookie.substring(5);
+        if(cookie != 'www.baidu.com'){
+            $('.steps a').click(function () {
+                if($(".steps").index(this) < ($('.steps').length - 1)){
+                    $(this).css({"display":"none"});
+                    $(this).next().css({"display":"block"});
+                }else if($(".steps").index(this) == ($('.steps').length - 1)){
+                    $(this).css({"display":"none"});
+                    $("#mask, #guide").css({"display":"none"});
+                }
+            })
+
+            $(".close").click(function(){
+                $(".steps, #mask, #guide").css({"display":"none"});
+            })
+
+            var myDate = new Date();
+            myDate = myDate.setDate(myDate.getDate()+30);
+            document.cookie = "name=www.baidu.com,expires="+myDate;
+        }else {
+            return;
+        }
+    })
+</script>
+</body>
+</html>

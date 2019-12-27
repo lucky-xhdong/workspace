@@ -1,0 +1,11 @@
+html {
+    background-color: red;
+}
+
+.box {
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    background-color: green;
+    /*composes: bigbox from 'common.css';*/
+}

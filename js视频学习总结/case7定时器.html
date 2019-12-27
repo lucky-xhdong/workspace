@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定时器</title>
+</head>
+<script>
+    function toDouble (n) {
+        if (n < 10) {
+            return '0' + n;
+        } else {
+            return '' + n;
+        }
+    }
+    window.onload = function () {
+        var aTxt = document.getElementsByTagName('span');
+        function tick() {
+            var oDate = new Date();
+            var str = toDouble(oDate.getHours()) + toDouble(oDate.getMinutes()) + toDouble(oDate.getSeconds());
+            for (var i = 0; i < aTxt.length; i++) {
+                aTxt[i].innerHTML = str[i];
+            }
+        }
+        setInterval(tick, 1000);
+        tick();
+    }
+
+</script>
+<body>
+<span>0</span>
+<span>0</span>:
+<span>0</span>
+<span>0</span>:
+<span>0</span>
+<span>0</span>
+</body>
+</html>

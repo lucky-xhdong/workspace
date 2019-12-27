@@ -1,0 +1,103 @@
+.header-wrapper {
+  position: relative;
+  .header-container {
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    .header-left {
+      float: left;
+      width: 152px;
+      height: 36px;
+      padding: 32px 0;
+      .logo {
+        display: block;
+        position: relative;
+        &:before {
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          width: 43px;
+          height: 32px;
+          background: url("../../assets/images/sprite.png") no-repeat;
+        }
+      }
+    }
+    .header-right {
+      float: right;
+      ul {
+        font-size: 0;
+        li {
+          display: inline-block;
+          vertical-align: middle;
+          margin: 0 28px;
+          position: relative;
+          .txt {
+            display: block;
+            font-size:18px;
+            color:#fff;
+            letter-spacing:0;
+            text-align:center;
+            padding: 28px 0 15px;
+          }
+          &.active {
+            &:after {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 2px;
+              background-color: #fff;
+              left: 0;
+              bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.mobile-wrapper, .bigdata-wrapper, .develop-news-wrapper, .about-us-wrapper, .detail-wrapper {
+  .header-wrapper {
+    .header-container {
+      .header-left {
+        .logo {
+          color: #000;
+          font-size: 18px;
+          &:before {
+            margin-right: 14px;
+            background-position: -147px -38px;
+          }
+        }
+      }
+      .header-right {
+        ul {
+          li {
+            .txt {
+              color: #000;
+            }
+            &.active {
+              &:after {
+                background-color: #000;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.home-wrapper {
+  .header-wrapper {
+    .header-container {
+      .header-left {
+        .logo {
+          color: #fff;
+          font-size: 18px;
+          &:before {
+            margin-right: 14px;
+            background-position: 0 0;
+          }
+        }
+      }
+    }
+  }
+}

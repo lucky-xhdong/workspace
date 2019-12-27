@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://xiangxue.ideatree.cn/media/com_ideacontent/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="http://xiangxue.ideatree.cn/media/com_ideacontent/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="http://114.66.199.11:9090/media/css/bootstrapv3.css">
+    <link rel="stylesheet" href="http://114.66.199.11:9090/media/css/bootstrap.min.css">
+    <title></title>
+</head>
+<body>
+<a href="b.html" data-toggle="modal" data-target="#coursemodal">点我</a>
+<div class="modal fade" id="coursemodal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog grade-modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">选择课程章节</h4>
+            </div>
+            <div class="modal-body"><script type="text/javascript">
+                var courseids = false;
+                var coursetitle = false;
+                function getcourseid(){
+                    $(".coursedownunit-caption").unbind("click");
+                    $(".coursedownunit-caption").click(function(){
+                        $(".coursedownunit-caption").parent().removeClass("bg-color-f2f4f4");
+                        $(".coursedownunit-caption").parent().find(".savecourse").addClass("display-none");
+                        $(this).parent().addClass("bg-color-f2f4f4");
+                        $(this).parent().find(".savecourse").removeClass("display-none");
+                        courseids = $(this).data("value");
+                        coursetitle = $(this).data("title");
+
+                    })
+                }
+                $(document).ready(function(e) {
+
+                    getcourseid();
+
+                    $("#confirmcourse").click(function(e){
+                        if(courseids){
+                            $("#courseIds").val(courseids);
+                            $("#selectcourse").html("已选："+coursetitle);
+                        }
+                        $("#coursemodal").modal("hide");
+                        e.stopPropagation();
+                    })
+
+                    $("#courseSection").treestory({
+                        expanded:'li:first'
+                    });
+
+                    /*var coursetree = new $coursetree();
+                     coursetree.init();*/
+                });</script>
+                <link rel="stylesheet" type="text/css" href="http://xiangxue.ideatree.cn/media/lib_anahita/css/font-awesome-4.0.3/css/font-awesome.css">
+                <div class="col-md-12">
+                    <div class="row setrow">
+                        <div class="bg-color-fff beta4-new-group height-overflow coursesetrow">
+                            <!--高级设置 start-->
+                            <div class="set-offmain">
+                                <div class="height-overflow li-table li-col-12" id="coursebody">
+                                    <ul id="courseSection">
+                                        <div class="height-overflow li-table">
+                                            <ul>
+                                                <li>
+                                                    <div class="line-h-f bg-color-f2f4f4 display-table width-100">
+                                                        <div class="pad-l-b text-center d-table-cell v-align-middle width-white"> <a href="javascript:;"><i class="color-a fa fa-caret-right"></i></a> </div>
+                                                        <span class="border-none bg-none input-group-addon">1.</span>
+                                                        <input class="mar-t-f form-control course-dirs" type="text" name="course1" id="course1">
+                                                        <span class="d-table-cell line-height-20 font-size-12 pad-v-a work-break-wrap width-100"></span>
+                                                        <div class="d-table-cell v-align-middle pad-h-g width-white">
+                                                            <span class="pad-h-k"><a href="javascript:void(0)"><i class="color-h fa fa-plus"></i></a></span>
+                                                            <span class="pad-h-k"><a href="javascript:void(0)"><i class="color-h fa fa-edit"></i></a></span>
+                                                            <span class="pad-h-k"><a href="javascript:void(0)"><i class="color-h fa fa-sort"></i></a></span>
+                                                            <span class="pad-h-k"><a href="javascript:void(0)" data-url="/component/groups/group/85794-古剑奇谭?courseid=1" data-upid="0" data-level="1" data-value="1" data-sign="1" class="savecourse display-none"><i class="color-a fa fa-check"></i></a></span>
+                                                            <span class="pad-h-k"><a href="javascript:void(0)"><i class="color-i fa fa-times"></i></a></span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <div class="clear-afdcd4"></div>
+                                            </ul>
+                                        </div>
+                                    </ul></div>
+                            </div>
+                            <!--高级设置 end-->
+                        </div>
+                    </div>
+                    <div class="clear-13"></div>
+                </div></div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-sm btn-publish btn-md-idea" type="submit" id="confirmcourse">确认</button>
+                <button class="btn btn-default btn-sm btn-md-idea" type="submit" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动-匀速运动</title>
+</head>
+<style>
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        position: absolute;
+        top: 50px;
+        left: 0;
+    }
+</style>
+<script>
+    var timer = null;
+    function startMove() {
+        var oDiv = document.getElementById('div1');
+        //问题1：oDiv.offsetLeft == 300当offsetLeft刚好到300时能停下来，但若是将speed的值修改之后offsetLeft不等于300仍不能正常停下
+        //所以需要将==改为>=；但这样也并不一定是刚好停在300的位置也可能是301或者其他值
+        //问题2：点击按钮执行动画，在300位置暂停，但若是再次点击按钮动画还是会执行，所以需要将动画执行过程放在else中执行
+        //问题3：将speed值改小，如果不停点击开始运动按钮，动画会由慢变快，也就说定时器不停在开启，所以在定时器执行之前需要先清除一下定时器
+        //再执行
+        var speed = 5;
+        clearInterval(timer);
+        timer = setInterval(function () {
+            if (oDiv.offsetLeft == 300) {
+                clearInterval(timer);
+            } else {
+                oDiv.style.left = oDiv.offsetLeft + speed + 'px';
+            }
+        }, 30)
+    }
+</script>
+<body>
+<input type="button" value="开始运动" onclick="startMove()">
+<div id="div1"></div>
+</body>
+</html>

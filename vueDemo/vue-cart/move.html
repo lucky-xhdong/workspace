@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .wrapper {
+        width: 500px;
+        margin: 0 auto;
+    }
+
+    .wrapper li {
+        list-style: none;
+        border-bottom: 1px dashed #ddd;
+        padding: 2px 10px;
+    }
+
+    .wrapper li a {
+        display: block;
+        text-decoration: none;
+        padding: 5px 0;
+        cursor: move;
+    }
+
+    .wrapper li .num {
+        font-style: normal;
+        color: #333;
+    }
+
+    .wrapper li .txt {
+        display: inline-block;
+        vertical-align: middle;
+        color: #666;
+        margin: 0 10px;
+    }
+</style>
+<body>
+<div class="wrapper">
+    <ul id="wrapper">
+        <li><a href="javascript:;"><i class="num">1</i>-<span class="txt">列表1</span></a></li>
+        <li><a href="javascript:;"><i class="num">2</i>-<span class="txt">列表2</span></a></li>
+        <li><a href="javascript:;"><i class="num">3</i>-<span class="txt">列表3</span></a></li>
+        <li><a href="javascript:;"><i class="num">4</i>-<span class="txt">列表4</span></a></li>
+        <li><a href="javascript:;"><i class="num">5</i>-<span class="txt">列表5</span></a></li>
+        <li><a href="javascript:;"><i class="num">6</i>-<span class="txt">列表6</span></a></li>
+        <li><a href="javascript:;"><i class="num">7</i>-<span class="txt">列表7</span></a></li>
+        <li><a href="javascript:;"><i class="num">8</i>-<span class="txt">列表8</span></a></li>
+        <li><a href="javascript:;"><i class="num">9</i>-<span class="txt">列表9</span></a></li>
+        <li><a href="javascript:;"><i class="num">10</i>-<span class="txt">列表10</span></a></li>
+    </ul>
+</div>
+<script>
+    // 获取元素id
+    function $(id) {
+        return document.getElementById(id)
+    }
+
+    // 获取鼠标位置
+    function getMousePos(e) {
+        return {
+            x: e.pageX || e.clientX + document.body.scrollLeft,
+            y: e.pageY || e.clientY + document.body.scrollTop
+        }
+    }
+
+    // 获取元素位置
+    function getElementPos(el) {
+        return {
+            x: el.offsetParent ? el.offsetLeft + arguments.callee(el.offsetParent)['x'] : el.offsetLeft,
+            y: el.offsetParent ? el.offsetTop + arguments.callee(el.offsetParent)['y'] : el.offsetTop
+        }
+    }
+
+    // 获取元素尺寸
+    function getElementSize(el) {
+        return {
+            width: el.offsetWidth,
+            height: el.offsetHeight
+        }
+    }
+
+    // 禁止选择
+    document.onselectstart = function () {
+        return false
+    }
+
+    // 判断是否有挪动
+    let MOVE = {}
+    MOVE.isMove = false
+
+    //创建移动标杆
+    let moveBak = document.createElement('div')
+    moveBak.style.width = 0 + 'px'
+    moveBak.style.height = 0 + 'px'
+
+    let wrapper = $('wrapper');
+    wrapper.onmousedown = function (e) {
+        // 获取要移动的单个元素及其位置
+        let list = wrapper.getElementsByTagName('li')
+        let num = wrapper.getElementsByTagName('i')
+        for (let i = 0; i < list.length; i++) {
+            list[i]['pos'] = getElementPos(list[i])
+            list[i]['size'] = getElementSize(list[i])
+        }
+        e = e || window.event
+        let target = e.target || e.srcElement
+        if (target.tagName.toLowerCase() === 'li') {
+            let elParent = getMousePos(e)
+            let elClone = target.cloneNode(true)
+            elClone.style.position = 'absolute'
+            elClone.style.left = target.pos.x + 'px'
+            elClone.style.top = target.pos.y + 'px'
+            elClone.style.width = target.size.width + 'px'
+            elClone.style.height = target.size.height + 'px'
+            elClone.style.border = '1px dashed #eee'
+            elClone.style.backgroundColor = '#d4d4d4'
+            elClone.style.opacity = '.7'
+            document.body.appendChild(elClone)
+
+            document.onmousemove = function (e) {
+                e = e || window.event
+                let elCurrent = getMousePos(e)
+                elClone.style.left = target.pos.x + elCurrent.x - elParent.x + 'px'
+                elClone.style.top = target.pos.y + elCurrent.y - elParent.y + 'px'
+                document.body.style.cursor = 'move'
+
+                // 判断插入点
+                for (let i = 0; i < list.length; i++) {
+                    if (elCurrent.x > list[i]['pos']['x'] &&
+                        elCurrent.x < (list[i]['pos']['x'] + list[i]['size']['width']) &&
+                        elCurrent.y > list[i]['pos']['y'] &&
+                        elCurrent.y < list[i]['pos']['y'] + list[i]['size']['height'] / 2) {
+                        if (target !== list[i]) {
+                            MOVE.isMove = true
+                            wrapper.insertBefore(moveBak, list[i])
+                        }
+                    } else if (elCurrent.x > list[i]['pos']['x'] &&
+                        elCurrent.x < (list[i]['pos']['x'] + list[i]['size']['width']) &&
+                        elCurrent.y > (list[i]['pos']['y'] + list[i]['size']['height'] / 2) &&
+                        elCurrent.y < (list[i]['pos']['y'] + list[i]['size']['height'])) {
+                        if (target !== list[i]) {
+                            MOVE.isMove = true
+                            num.innerHTML = '2'
+                            wrapper.insertBefore(moveBak, list[i].nextSibling)
+                        }
+                    }
+
+                }
+            }
+            document.onmouseup = function (e) {
+                e = e || window.event
+                document.onmousemove = null
+                if (MOVE.isMove) {
+                    wrapper.replaceChild(target, moveBak)
+                    MOVE.isMove = false
+                }
+                document.body.removeChild(elClone)
+                elClone = null
+                document.body.style.cursor = 'normal'
+                document.onmouseup = null
+            }
+        }
+    }
+</script>
+</body>
+</html>

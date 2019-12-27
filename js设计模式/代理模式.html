@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>代理模式</title>
+</head>
+<!--骨骼动画：http://alloyteam.github.io/AlloyStick/-->
+<body>
+<script>
+    //代理模式需要3方
+    //1.买家
+    function maijia(arguments) {
+        this.name = '小明';
+    }
+    //2.中介
+    function zhongjie() {
+
+    }
+    //2.1中介卖房
+    zhongjie.prototype.maifang = function () {
+        new fangdong(new maijia()).maifang('20万');
+    }
+    //3.房东
+    function fangdong(maijia) {
+        this.maijia_name = maijia.name;
+        this.maifang = function (price) {
+            console.log('收到了来自【'+this.maijia_name+'】' + price + '人民币')
+        }
+    }
+    //没有参数的情况下可以这样(new zhongjie)一个类
+    // (new zhongjie).maifang()
+    new zhongjie().maifang()
+</script>
+</body>
+</html>

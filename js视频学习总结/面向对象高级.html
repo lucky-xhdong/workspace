@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>面向对象高级</title>
+    <script src="js/Drag.js"></script>
+    <script src="js/LimitDrag.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    #div1 {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background-color: green;
+        cursor: pointer;
+    }
+    #div2 {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        cursor: pointer;
+        background-color: yellow;
+    }
+</style>
+<script>
+    //json单体模式
+    // var json = {
+    //     a: 12,
+    //     b: 5,
+    //     show: function () {
+    //         console.log(this.a)
+    //     }
+    // }
+    // json.show();
+
+    //普通拖拽
+    // window.onload = function () {
+    //     var oDiv = document.getElementById('div1');
+    //     oDiv.onmousedown = function (e) {
+    //         var e = e || event;
+    //         var disX = e.clientX - oDiv.offsetLeft;
+    //         var disY = e.clientY - oDiv.offsetTop;
+    //         document.onmousemove = function (e) {
+    //             oDiv.style.left = e.clientX - disX + 'px';
+    //             oDiv.style.top = e.clientY - disY + 'px';
+    //         }
+    //         document.onmouseup = function () {
+    //             document.onmousemove = null;
+    //             document.onmouseup = null;
+    //         }
+    //     }
+    // }
+
+
+    window.onload = function () {
+        new Drag('div1');
+        new LimitDrag('div2');
+    };
+</script>
+
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+</body>
+</html>
